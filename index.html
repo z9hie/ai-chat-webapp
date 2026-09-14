@@ -1,1 +1,2164 @@
-<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover"/><title>AI Chat</title><script src="https://telegram.org/js/telegram-web-app.js"></script><style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');:root{--bg:#0a0a0f;--bg-sidebar:#0f0f17;--bg-card:#14141c;--bg-card-hover:#1c1c26;--bg-elevated:#1a1a24;--bg-ai:#1a1a24;--border:rgba(255,255,255,0.06);--border-hover:rgba(255,255,255,0.12);--text:#fff;--text-secondary:#8a8a9e;--text-muted:#4a4a5e;--accent:#2f80ed;--accent-hover:#4a9eff;--accent-glow:rgba(47,128,237,0.35);--green:#22c55e;--danger:#ef4444;--warning:#eab308;--purple:#a855f7;--radius:16px;--radius-sm:12px;--sidebar-w:280px;--header-h:60px}*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{height:100%;overflow:hidden}body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overscroll-behavior:none}.app{display:flex;height:100vh;height:100dvh;overflow:hidden}.sidebar{width:var(--sidebar-w);background:var(--bg-sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;transition:transform .3s cubic-bezier(.16,1,.3,1);z-index:200}.sidebar-header{padding:16px;border-bottom:1px solid var(--border)}.sidebar-logo{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:900;letter-spacing:-.5px;margin-bottom:14px}.sidebar-logo-mark{width:32px;height:32px;background:linear-gradient(135deg,#2f80ed,#a855f7);border-radius:9px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px var(--accent-glow);flex-shrink:0}.sidebar-logo-mark svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2.2}.new-chat-btn{width:100%;padding:11px 14px;background:var(--accent);color:#fff;border:none;border-radius:11px;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s;box-shadow:0 4px 14px var(--accent-glow)}.new-chat-btn:hover{background:var(--accent-hover)}.new-chat-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5}.sidebar-nav{padding:8px;border-bottom:1px solid var(--border)}.sidebar-nav-btn{width:100%;text-align:left;background:none;border:none;padding:10px 12px;border-radius:10px;cursor:pointer;color:var(--text-secondary);font-size:13px;font-weight:600;font-family:inherit;display:flex;align-items:center;gap:10px;transition:all .2s}.sidebar-nav-btn:hover{background:rgba(255,255,255,0.04);color:var(--text)}.sidebar-nav-btn.active{background:rgba(47,128,237,0.12);color:var(--accent)}.sidebar-nav-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}.chat-list{flex:1;overflow-y:auto;padding:8px}.chat-list::-webkit-scrollbar{width:4px}.chat-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:2px}.chat-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;transition:all .15s;margin-bottom:2px;position:relative}.chat-item:hover{background:rgba(255,255,255,0.04)}.chat-item.active{background:rgba(47,128,237,0.12)}.chat-item-pin{position:absolute;top:6px;right:8px;color:var(--warning);font-size:10px;opacity:.8}.chat-item-content{flex:1;min-width:0}.chat-item-title{font-size:13px;font-weight:600;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}.chat-item.active .chat-item-title{color:var(--text)}.chat-item-date{font-size:10px;color:var(--text-muted);font-weight:600}.chat-item-menu-btn{width:26px;height:26px;background:none;border:none;border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-muted);opacity:0;transition:all .15s;flex-shrink:0}.chat-item:hover .chat-item-menu-btn{opacity:1}.chat-item-menu-btn:hover{background:rgba(255,255,255,0.06);color:var(--text)}.chat-item-menu-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5}.chat-item-menu{position:absolute;top:100%;right:8px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:4px;z-index:100;min-width:140px;box-shadow:0 8px 24px rgba(0,0,0,.4);display:none}.chat-item-menu.active{display:block}.chat-item-menu-item{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:7px;font-size:12px;font-weight:600;color:var(--text-secondary);cursor:pointer;font-family:inherit;background:none;border:none;width:100%;text-align:left;transition:all .15s}.chat-item-menu-item:hover{background:rgba(255,255,255,0.06);color:var(--text)}.chat-item-menu-item.danger{color:var(--danger)}.chat-item-menu-item svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}.sidebar-footer{padding:12px;border-top:1px solid var(--border)}.sidebar-user{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:11px;cursor:pointer;transition:all .2s}.sidebar-user:hover{background:rgba(255,255,255,0.04)}.sidebar-user-avatar{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#2f80ed,#a855f7);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#fff;flex-shrink:0;overflow:hidden}.sidebar-user-avatar img{width:100%;height:100%;object-fit:cover}.sidebar-user-info{flex:1;min-width:0}.sidebar-user-name{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sidebar-user-plan{font-size:10px;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.5px}.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:150;animation:fadeIn .2s}.sidebar-overlay.active{display:block}@keyframes fadeIn{from{opacity:0}to{opacity:1}}.main-area{flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden;position:relative}.topbar{height:var(--header-h);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:12px;flex-shrink:0;background:var(--bg);z-index:50}.burger-btn{display:none;width:38px;height:38px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;align-items:center;justify-content:center;cursor:pointer;color:var(--text-secondary);flex-shrink:0}.burger-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}.topbar-title{font-size:15px;font-weight:800;letter-spacing:-.3px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.model-select-wrap{position:relative}.model-select{padding:8px 32px 8px 14px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:12px;font-weight:700;font-family:inherit;outline:none;cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238a8a9e' stroke-width='2.5' stroke-linecap='round'%3e%3cpolyline points='6 9 12 15 18 9'/%3e%3c/svg%3e");background-repeat:no-repeat;background-position:right 10px center;background-size:12px}.page{display:none;flex:1;flex-direction:column;min-height:0;overflow:hidden;position:relative}.page.active{display:flex}.chat-scroll{flex:1;overflow-y:auto;padding:20px 16px 100px;scroll-behavior:smooth}.chat-scroll::-webkit-scrollbar{width:6px}.chat-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:3px}.chat-inner{max-width:800px;margin:0 auto;width:100%}.chat-welcome{text-align:center;padding:60px 20px}.chat-welcome-icon{width:72px;height:72px;margin:0 auto 20px;background:linear-gradient(135deg,#2f80ed,#a855f7);border-radius:20px;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 32px var(--accent-glow)}.chat-welcome-icon svg{width:32px;height:32px;stroke:#fff;fill:none;stroke-width:2}.chat-welcome h2{font-size:24px;font-weight:900;letter-spacing:-.8px;margin-bottom:8px}.chat-welcome p{font-size:14px;color:var(--text-secondary);margin-bottom:24px;line-height:1.5}.suggestions{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}.suggestion-btn{padding:10px 16px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:100px;color:var(--text-secondary);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s}.suggestion-btn:hover{background:rgba(255,255,255,0.06);color:var(--text);border-color:var(--border-hover)}.message{display:flex;gap:12px;margin-bottom:20px;animation:messageIn .3s cubic-bezier(.16,1,.3,1);max-width:100%}@keyframes messageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}.message-avatar{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff;flex-shrink:0;overflow:hidden}.message-avatar.user{background:linear-gradient(135deg,#2f80ed,#4a9eff)}.message-avatar.ai{background:linear-gradient(135deg,#a855f7,#7c3aed)}.message-avatar.ai svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2.2}.message-avatar img{width:100%;height:100%;object-fit:cover}.message-content{flex:1;min-width:0}.message-name{font-size:11px;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}.message-bubble{padding:12px 16px;border-radius:14px;font-size:14px;line-height:1.55;word-wrap:break-word;white-space:pre-wrap}.message.user .message-bubble{background:rgba(47,128,237,0.12);border:1px solid rgba(47,128,237,0.25)}.message.ai .message-bubble{background:var(--bg-ai);border:1px solid var(--border)}.message-bubble code{background:rgba(0,0,0,.4);padding:2px 6px;border-radius:4px;font-family:'SF Mono',Monaco,monospace;font-size:12.5px}.message-bubble pre{background:rgba(0,0,0,.4);padding:12px;border-radius:8px;overflow-x:auto;margin:8px 0;font-family:'SF Mono',Monaco,monospace;font-size:12.5px;line-height:1.5;position:relative}.message-bubble pre code{background:none;padding:0}.code-copy-btn{position:absolute;top:6px;right:6px;padding:4px 8px;background:rgba(255,255,255,0.1);border:none;border-radius:6px;color:var(--text);font-size:10px;font-weight:700;cursor:pointer;font-family:inherit;opacity:0;transition:opacity .15s}.message-bubble pre:hover .code-copy-btn{opacity:1}.typing{display:inline-flex;gap:4px;align-items:center;padding:4px 0}.typing span{width:6px;height:6px;background:var(--text-muted);border-radius:50%;animation:typing 1.4s infinite}.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}@keyframes typing{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}.chat-input-wrap{position:absolute;bottom:0;left:0;right:0;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(to top,var(--bg) 60%,transparent);pointer-events:none;z-index:40}.chat-input-inner{max-width:800px;margin:0 auto;background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:8px;display:flex;align-items:flex-end;gap:8px;pointer-events:auto;transition:border-color .2s}.chat-input-inner:focus-within{border-color:var(--border-hover)}.chat-input{flex:1;background:none;border:none;color:var(--text);font-size:14px;font-family:inherit;outline:none;resize:none;max-height:120px;min-height:24px;padding:8px 8px 8px 12px;line-height:1.4}.chat-input::placeholder{color:var(--text-muted)}.chat-send{width:38px;height:38px;background:var(--accent);border:none;border-radius:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;transition:all .2s;flex-shrink:0}.chat-send:hover{background:var(--accent-hover)}.chat-send:disabled{opacity:.4;cursor:not-allowed}.chat-send svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2}.chat-info{max-width:800px;margin:6px auto 0;text-align:center;font-size:11px;color:var(--text-muted);font-weight:600;pointer-events:auto}.page-scroll{flex:1;overflow-y:auto;padding:20px 16px 40px}.page-scroll::-webkit-scrollbar{width:6px}.page-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:3px}.page-inner{max-width:1100px;margin:0 auto}.page-head{margin-bottom:24px}.page-head h1{font-size:28px;font-weight:900;letter-spacing:-1px;margin-bottom:6px}.page-head p{font-size:14px;color:var(--text-secondary)}.image-gen-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}@media(max-width:900px){.image-gen-layout{grid-template-columns:1fr}}.image-prompt-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px}.image-prompt-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);margin-bottom:10px}.image-prompt-input{width:100%;padding:14px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;color:var(--text);font-size:14px;font-family:inherit;outline:none;resize:vertical;min-height:120px;line-height:1.5;margin-bottom:12px}.image-prompt-input:focus{border-color:var(--accent)}.image-prompt-input::placeholder{color:var(--text-muted)}.image-gen-btn{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s;box-shadow:0 6px 20px var(--accent-glow)}.image-gen-btn:hover{background:var(--accent-hover)}.image-gen-btn:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}.image-gen-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5}.image-limit-info{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:12px;font-weight:600;color:var(--text-muted)}.image-limit-bar{height:4px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden;margin-top:8px}.image-limit-fill{height:100%;background:linear-gradient(90deg,#2f80ed,#a855f7);border-radius:3px;transition:width .5s ease}.image-result-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;min-height:400px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.image-result-placeholder{color:var(--text-muted)}.image-result-placeholder svg{width:64px;height:64px;stroke:var(--text-muted);fill:none;stroke-width:1.5;margin-bottom:16px}.image-result-placeholder p{font-size:14px;line-height:1.5}.image-result-img{width:100%;max-width:1024px;border-radius:12px;display:block;animation:imageIn .4s cubic-bezier(.16,1,.3,1)}@keyframes imageIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.image-result-actions{display:flex;gap:8px;width:100%;margin-top:16px;flex-wrap:wrap}.image-action-btn{flex:1;min-width:120px;padding:11px 14px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:11px;color:var(--text-secondary);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .2s}.image-action-btn:hover{background:rgba(255,255,255,0.08);color:var(--text)}.image-action-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}.image-action-btn.primary:hover{background:var(--accent-hover)}.image-action-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2}.image-history-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-top:20px}.image-history-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.image-history-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted)}.image-history-clear{padding:6px 12px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;color:var(--danger);font-size:11px;font-weight:800;cursor:pointer;font-family:inherit}.image-history-clear:hover{background:rgba(239,68,68,0.2)}.image-history-item{padding:10px 12px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:10px;margin-bottom:6px;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:10px}.image-history-item:hover{background:rgba(255,255,255,0.05);border-color:var(--border-hover)}.image-history-text{flex:1;font-size:13px;color:var(--text-secondary);line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.image-history-date{font-size:10px;color:var(--text-muted);font-weight:600;flex-shrink:0}.image-history-empty{text-align:center;padding:20px;font-size:13px;color:var(--text-muted)}.image-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;gap:20px}.image-loading-spinner{width:48px;height:48px;border:4px solid rgba(255,255,255,0.08);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.image-loading-text{font-size:14px;color:var(--text-secondary);font-weight:600}.image-loading-hint{font-size:12px;color:var(--text-muted)}.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}.plan-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px 22px;display:flex;flex-direction:column;transition:all .25s;position:relative;overflow:hidden}.plan-card:hover{transform:translateY(-3px);border-color:var(--border-hover)}.plan-card.current{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}.plan-card.premium{background:linear-gradient(180deg,#14141c 0%,#1a1730 100%)}.plan-card.gpt{background:linear-gradient(180deg,#14141c 0%,#2a1435 100%)}.plan-badge{position:absolute;top:14px;right:14px;padding:4px 10px;background:var(--accent);color:#fff;border-radius:100px;font-size:9px;font-weight:900;letter-spacing:.5px;text-transform:uppercase}.plan-badge.purple{background:var(--purple)}.plan-name{font-size:20px;font-weight:900;letter-spacing:-.5px;margin-bottom:6px}.plan-desc{font-size:12px;color:var(--text-secondary);margin-bottom:20px;min-height:32px;line-height:1.4}.plan-price{display:flex;align-items:baseline;gap:6px;margin-bottom:6px}.plan-price-amount{font-size:36px;font-weight:900;letter-spacing:-1.5px}.plan-price-period{font-size:13px;color:var(--text-secondary);font-weight:600}.plan-stars{font-size:11px;color:var(--text-muted);margin-bottom:20px;font-weight:600}.plan-features{list-style:none;margin-bottom:24px;flex:1}.plan-features li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;font-size:13px;color:var(--text-secondary);line-height:1.4}.plan-features li svg{width:16px;height:16px;stroke:var(--green);fill:none;stroke-width:2.5;flex-shrink:0;margin-top:1px}.plan-features li.disabled{opacity:.4}.plan-features li.disabled svg{stroke:var(--text-muted)}.plan-btn{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;transition:all .2s}.plan-btn:hover{background:var(--accent-hover)}.plan-btn:disabled{background:rgba(255,255,255,0.06);color:var(--text-muted);cursor:not-allowed}.plan-btn.purple{background:var(--purple)}.plan-btn.purple:hover{background:#b975f8}.profile-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:16px;position:relative;overflow:hidden}.profile-card::before{content:"";position:absolute;top:-50%;right:-20%;width:200px;height:200px;background:radial-gradient(circle,var(--accent-glow),transparent 70%);border-radius:50%}.profile-header{display:flex;align-items:center;gap:16px;position:relative;margin-bottom:20px}.profile-avatar{width:72px;height:72px;border-radius:18px;background:linear-gradient(135deg,#2f80ed,#a855f7);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:#fff;flex-shrink:0;overflow:hidden;box-shadow:0 8px 24px var(--accent-glow)}.profile-avatar img{width:100%;height:100%;object-fit:cover}.profile-info{flex:1;min-width:0}.profile-name{font-size:22px;font-weight:900;letter-spacing:-.6px;margin-bottom:4px}.profile-username{font-size:13px;color:var(--text-secondary);margin-bottom:10px;font-weight:600}.plan-chip{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:rgba(47,128,237,0.15);border:1px solid rgba(47,128,237,0.3);color:var(--accent);border-radius:100px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}.plan-chip.gpt{background:rgba(168,85,247,0.15);border-color:rgba(168,85,247,0.3);color:var(--purple)}.usage-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;position:relative}.usage-card{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px}.usage-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);margin-bottom:8px}.usage-value{font-size:24px;font-weight:900;letter-spacing:-1px;margin-bottom:4px}.usage-bar{height:4px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden;margin-top:10px}.usage-bar-fill{height:100%;background:linear-gradient(90deg,#2f80ed,#a855f7);border-radius:3px;transition:width .5s ease}.profile-menu{display:flex;flex-direction:column;gap:8px}.profile-menu-item{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;text-align:left;font-family:inherit;color:var(--text);font-size:14px;font-weight:700}.profile-menu-item:hover{background:var(--bg-card-hover);border-color:var(--border-hover)}.profile-menu-left{display:flex;align-items:center;gap:12px}.profile-menu-icon{width:34px;height:34px;background:rgba(47,128,237,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center}.profile-menu-icon svg{width:16px;height:16px;stroke:var(--accent);fill:none;stroke-width:2}.profile-menu-arrow{color:var(--text-muted);font-size:18px}.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:500;align-items:center;justify-content:center;padding:20px}.modal-overlay.active{display:flex}.modal{background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:28px 24px;max-width:400px;width:100%;text-align:center;animation:modalIn .3s cubic-bezier(.16,1,.3,1)}@keyframes modalIn{from{opacity:0;transform:scale(.94) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}.modal-icon{width:64px;height:64px;margin:0 auto 16px;background:linear-gradient(135deg,#2f80ed,#a855f7);border-radius:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px var(--accent-glow)}.modal-icon svg{width:28px;height:28px;stroke:#fff;fill:none;stroke-width:2}.modal h3{font-size:20px;font-weight:900;letter-spacing:-.5px;margin-bottom:8px}.modal p{font-size:14px;color:var(--text-secondary);line-height:1.55;margin-bottom:20px}.modal-btn{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;transition:all .2s;text-decoration:none;display:block;text-align:center}.modal-btn:hover{background:var(--accent-hover)}.modal-btn.secondary{background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--text-secondary);margin-top:8px}.modal-btn.secondary:hover{background:rgba(255,255,255,0.08);color:var(--text)}.modal-input{width:100%;padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:11px;color:var(--text);font-size:14px;font-family:inherit;outline:none;margin-bottom:16px}.modal-input:focus{border-color:var(--accent)}.toast{position:fixed;top:24px;left:50%;transform:translateX(-50%) translateY(-120px);background:rgba(20,20,28,.95);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:12px 20px;color:var(--text);font-size:13px;font-weight:700;z-index:999;transition:transform .3s;max-width:90%;text-align:center}.toast.show{transform:translateX(-50%) translateY(0)}.toast.success{border-color:rgba(34,197,94,.4);color:var(--green)}.toast.error{border-color:rgba(239,68,68,.4);color:var(--danger)}#loader{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .5s ease,visibility .5s}#loader.hidden{opacity:0;visibility:hidden}.loader-logo{font-size:32px;font-weight:900;letter-spacing:-1.5px;background:linear-gradient(135deg,#fff 0%,#2f80ed 60%,#a855f7 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:20px;text-align:center}.loader-track{width:160px;height:3px;background:rgba(255,255,255,0.06);border-radius:3px;margin:0 auto;overflow:hidden}.loader-fill{height:100%;width:0%;background:linear-gradient(90deg,#2f80ed,#a855f7);border-radius:3px;transition:width .3s ease}@media(max-width:900px){.sidebar{position:fixed;top:0;left:0;height:100%;transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.burger-btn{display:flex}.plans-grid{grid-template-columns:1fr;gap:12px}}@media(max-width:500px){.chat-scroll{padding:16px 12px 100px}.chat-input-wrap{padding:10px 12px calc(10px + env(safe-area-inset-bottom))}.page-head h1{font-size:22px}.plan-price-amount{font-size:30px}.message-bubble{font-size:13.5px}}</style></head><body><div id="loader"><div><div class="loader-logo">AI Chat</div><div class="loader-track"><div class="loader-fill" id="loader-fill"></div></div></div></div><div class="app"><aside class="sidebar" id="sidebar"><div class="sidebar-header"><div class="sidebar-logo"><div class="sidebar-logo-mark"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><div>AI Chat</div></div><button class="new-chat-btn" onclick="createNewChat()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Новый чат</button></div><div class="sidebar-nav"><button class="sidebar-nav-btn" onclick="showPage('chat')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Чат</button><button class="sidebar-nav-btn" onclick="showPage('images')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>AI Images</button><button class="sidebar-nav-btn" onclick="showPage('plans')"><svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>Тарифы</button></div><div class="chat-list" id="chat-list"></div><div class="sidebar-footer"><div class="sidebar-user" onclick="showPage('profile')"><div class="sidebar-user-avatar" id="sidebar-avatar">?</div><div class="sidebar-user-info"><div class="sidebar-user-name" id="sidebar-name">Пользователь</div><div class="sidebar-user-plan" id="sidebar-plan">FREE</div></div></div></div></aside><div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div><div class="main-area"><div class="topbar"><button class="burger-btn" onclick="toggleSidebar()"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button><div class="topbar-title" id="topbar-title">Чат</div><div class="model-select-wrap" id="model-select-wrap"><select class="model-select" id="model-select"><option value="llama-8b">Llama 3.1 8B</option><option value="glm-flash">GLM 4.7 Flash</option></select></div></div><div class="page active" id="page-chat"><div class="chat-scroll" id="chat-scroll"><div class="chat-inner" id="chat-inner"><div class="chat-welcome" id="chat-welcome"><div class="chat-welcome-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><h2>Чем помочь?</h2><p>Задай вопрос — я отвечу. Или выбери один из примеров.</p><div class="suggestions"><button class="suggestion-btn" onclick="sendSuggestion('Расскажи интересный факт')">💡 Интересный факт</button><button class="suggestion-btn" onclick="sendSuggestion('Помоги написать пост для Telegram')">✍️ Написать пост</button><button class="suggestion-btn" onclick="sendSuggestion('Объясни простыми словами что такое API')">📚 Объясни API</button><button class="suggestion-btn" onclick="sendSuggestion('Придумай идею для бизнеса')">🚀 Идея бизнеса</button></div></div></div></div><div class="chat-input-wrap"><div class="chat-input-inner"><textarea class="chat-input" id="chat-input" placeholder="Напиши сообщение..." rows="1"></textarea><button class="chat-send" id="chat-send" onclick="sendMessage()"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button></div><div class="chat-info" id="chat-info">Осталось 30 / 30 сообщений</div></div></div><div class="page" id="page-images"><div class="page-scroll"><div class="page-inner"><div class="page-head"><h1>AI Images</h1><p>Опиши картинку, которую хочешь сгенерировать</p></div><div class="image-gen-layout"><div><div class="image-prompt-card"><div class="image-prompt-label">Промпт</div><textarea class="image-prompt-input" id="image-prompt" placeholder="Например: космический кот в скафандре, стиль кибербанк, яркие цвета, 4K..."></textarea><button class="image-gen-btn" id="image-gen-btn" onclick="generateImage()"><svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>Сгенерировать</button><div class="image-limit-info"><span>Осталось картинок</span><span id="image-limit-text">5 / 5</span></div><div class="image-limit-bar"><div class="image-limit-fill" id="image-limit-fill" style="width:0%"></div></div></div><div class="image-history-card"><div class="image-history-head"><div class="image-history-title">История промптов</div><button class="image-history-clear" onclick="clearImageHistory()">Очистить</button></div><div id="image-history-list"><div class="image-history-empty">Пока пусто</div></div></div></div><div class="image-result-card" id="image-result-card"><div class="image-result-placeholder" id="image-placeholder"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><p>Здесь появится сгенерированная картинка</p></div></div></div></div></div></div><div class="page" id="page-plans"><div class="page-scroll"><div class="page-inner"><div class="page-head"><h1>Тарифы</h1><p>Выбери подходящий план. Оплата скоро появится.</p></div><div class="plans-grid"><div class="plan-card" id="plan-free"><div class="plan-name">Free</div><div class="plan-desc">Базовый доступ для знакомства</div><div class="plan-price"><div class="plan-price-amount">0 ₽</div><div class="plan-price-period">навсегда</div></div><div class="plan-stars">Бесплатно</div><ul class="plan-features"><li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>30 сообщений в день</li><li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>5 картинок в день</li><li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Базовые модели</li><li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>История чатов</li><li class="disabled"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Расширенные модели</li></ul><button class="plan-btn" disabled>Текущий тариф</button></div><div class="plan-card premium"><div class="plan-badge">Популярный</div><div class="plan-name">Premium</div><div class="plan-desc">Больше лимитов и расширенные модели</div><div class="plan-price"><div class="plan-price-amount">299 ₽</div><div class="plan-price-period">/ мес</div></div><div class="plan-stars">или 300 ⭐ Stars</div><ul class="plan-features"><li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>60 сообщений в день</li><li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>10 картинок в день</li><li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Расширенные модели</li><li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>История чатов</li><li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Приоритетная поддержка</li></ul><button class="plan-btn" onclick="openSubscribeModal('premium')">Купить</button></div><div class="plan-card gpt"><div class="plan-badge purple">MAX</div><div class="plan-name">GPT</div><div class="plan-desc">Полный доступ без ограничений</div><div class="plan-price"><div class="plan-price-amount">1499 ₽</div><div class="plan-price-period">/ мес</div></div><div class="plan-stars">или 1500 ⭐ Stars</div><ul class="plan-features"><li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Безлимит сообщений</li><li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Безлимит картинок</li><li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Все модели включая топовые</li><li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Приоритетная поддержка</li><li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Ранний доступ к новинкам</li></ul><button class="plan-btn purple" onclick="openSubscribeModal('gpt')">Купить</button></div></div></div></div></div><div class="page" id="page-profile"><div class="page-scroll"><div class="page-inner"><div class="page-head"><h1>Профиль</h1></div><div class="profile-card"><div class="profile-header"><div class="profile-avatar" id="profile-avatar">?</div><div class="profile-info"><div class="profile-name" id="profile-name">Пользователь</div><div class="profile-username" id="profile-username">@user</div><div class="plan-chip" id="profile-plan-chip">FREE</div></div></div><div class="usage-grid"><div class="usage-card"><div class="usage-label">Сообщений сегодня</div><div class="usage-value" id="usage-messages">0 / 30</div><div class="usage-bar"><div class="usage-bar-fill" id="usage-bar-messages" style="width:0%"></div></div></div><div class="usage-card"><div class="usage-label">Картинок сегодня</div><div class="usage-value" id="usage-images">0 / 5</div><div class="usage-bar"><div class="usage-bar-fill" id="usage-bar-images" style="width:0%"></div></div></div></div></div><div class="profile-menu"><button class="profile-menu-item" onclick="showPage('plans')"><div class="profile-menu-left"><div class="profile-menu-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></div>Обновить тариф</div><div class="profile-menu-arrow">›</div></button><button class="profile-menu-item" onclick="showPage('images')"><div class="profile-menu-left"><div class="profile-menu-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>Генерация картинок</div><div class="profile-menu-arrow">›</div></button><button class="profile-menu-item" onclick="window.open('https://t.me/qmarket_support','_blank')"><div class="profile-menu-left"><div class="profile-menu-icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div>Поддержка</div><div class="profile-menu-arrow">›</div></button></div></div></div></div></div></div><div class="modal-overlay" id="subscribe-modal"><div class="modal"><div class="modal-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></div><h3 id="modal-title">Оплата скоро</h3><p id="modal-text">Мы уже работаем над этим. Подпишись на канал, чтобы узнать первым о запуске.</p><a href="https://t.me/QuickMarket_News" target="_blank" class="modal-btn">Подписаться на канал</a><button class="modal-btn secondary" onclick="closeModal('subscribe-modal')">Закрыть</button></div></div><div class="modal-overlay" id="rename-modal"><div class="modal"><h3>Переименовать чат</h3><p>Введи новое название</p><input class="modal-input" id="rename-input" placeholder="Название чата"><button class="modal-btn" onclick="confirmRename()">Сохранить</button><button class="modal-btn secondary" onclick="closeModal('rename-modal')">Отмена</button></div></div><div class="modal-overlay" id="delete-modal"><div class="modal"><div class="modal-icon" style="background:linear-gradient(135deg,#ef4444,#dc2626)"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg></div><h3>Удалить чат?</h3><p>Все сообщения будут удалены навсегда. Это действие нельзя отменить.</p><button class="modal-btn" style="background:var(--danger)" onclick="confirmDelete()">Удалить</button><button class="modal-btn secondary" onclick="closeModal('delete-modal')">Отмена</button></div></div><div class="toast" id="toast"></div><script>const tg=window.Telegram?.WebApp;if(tg){tg.ready();tg.expand();if(tg.requestFullscreen)tg.requestFullscreen();tg.setHeaderColor('#0a0a0f');tg.setBackgroundColor('#0a0a0f');if(tg.setBottomBarColor)tg.setBottomBarColor('#0a0a0f');if(tg.disableVerticalSwipes)tg.disableVerticalSwipes()}const SERVER_URL="https://ai-chat.z9hie.workers.dev";const user=tg?.initDataUnsafe?.user||{first_name:'Гость',username:'guest',id:0,photo_url:''};let userData={plan:'free',messagesToday:0,imagesToday:0};let messagesLeft=30;let messagesLimit=30;let imagesLeft=5;let imagesLimit=5;let currentModel='llama-8b';let isSending=false;let chats=[];let currentChatId=null;let currentChatLimit=100;let currentChatCount=0;let chatContext=null;let chatToRename=null;let chatToDelete=null;let lastGeneratedImage=null;let isGenerating=false;async function apiGet(path){const res=await fetch(SERVER_URL+path);return res.json()}async function apiPost(path,data){const res=await fetch(SERVER_URL+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});return res.json()}const loaderFill=document.getElementById('loader-fill');let progress=0;const loaderInterval=setInterval(()=>{progress+=Math.random()*15+5;if(progress>90)progress=90;loaderFill.style.width=progress+'%'},100);async function init(){try{userData=await apiPost('/user',{userId:String(user.id),firstName:user.first_name,username:user.username||''});await loadLimits();await loadChats();await loadImageHistory();if(chats.length===0){await createNewChat(true)}else{await openChat(chats[0].id)}}catch(e){console.error(e);showToast('Ошибка загрузки','error')}progress=100;loaderFill.style.width='100%';setTimeout(()=>{clearInterval(loaderInterval);document.getElementById('loader').classList.add('hidden');renderAll()},300)}async function loadLimits(){try{const data=await apiGet(`/user/limits?userId=${user.id}`);if(data.plan){userData.plan=data.plan;userData.messagesToday=data.messagesToday;userData.imagesToday=data.imagesToday||0;messagesLeft=data.messagesLeft;messagesLimit=data.messagesLimit;imagesLeft=data.imagesLeft;imagesLimit=data.imagesLimit;updateImageLimitUI()}}catch(e){}}async function loadChats(){try{const data=await apiGet(`/chats/list?userId=${user.id}`);chats=data.chats||[];renderChatList()}catch(e){chats=[]}}async function loadImageHistory(){try{const data=await apiGet(`/ai/image/history?userId=${user.id}`);renderImageHistory(data.history||[])}catch(e){renderImageHistory([])}}function renderChatList(){const list=document.getElementById('chat-list');if(chats.length===0){list.innerHTML='<div style="text-align:center;padding:20px 10px;font-size:12px;color:var(--text-muted);">Нет чатов</div>';return}list.innerHTML=chats.map(chat=>{const isActive=chat.id===currentChatId;const date=new Date(chat.updated_at).toLocaleDateString('ru-RU',{day:'numeric',month:'short'});return `<div class="chat-item ${isActive?'active':''}" data-chat-id="${chat.id}" onclick="openChat('${chat.id}')">${chat.pinned?'<div class="chat-item-pin">📌</div>':''}<div class="chat-item-content"><div class="chat-item-title">${escapeHTML(chat.title)}</div><div class="chat-item-date">${date}</div></div><button class="chat-item-menu-btn" onclick="event.stopPropagation();toggleChatMenu('${chat.id}',event)"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></button></div>`}).join('')}function toggleChatMenu(chatId,event){event.stopPropagation();document.querySelectorAll('.chat-item-menu').forEach(m=>m.remove());const chat=chats.find(c=>c.id===chatId);if(!chat)return;const item=event.target.closest('.chat-item');const menu=document.createElement('div');menu.className='chat-item-menu active';menu.innerHTML=`<button class="chat-item-menu-item" onclick="event.stopPropagation();startRename('${chatId}')"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Переименовать</button><button class="chat-item-menu-item" onclick="event.stopPropagation();togglePin('${chatId}')"><svg viewBox="0 0 24 24"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 00-1.11-1.79l-1.78-.9A2 2 0 0115 10.76V6h1a2 2 0 000-4H8a2 2 0 000 4h1v4.76a2 2 0 01-1.11 1.79l-1.78.9A2 2 0 005 15.24z"/></svg>${chat.pinned?'Открепить':'Закрепить'}</button><button class="chat-item-menu-item danger" onclick="event.stopPropagation();startDelete('${chatId}')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>Удалить</button>`;item.style.position='relative';item.appendChild(menu);setTimeout(()=>{document.addEventListener('click',closeAllChatMenus,{once:true})},10)}function closeAllChatMenus(){document.querySelectorAll('.chat-item-menu').forEach(m=>m.remove())}async function createNewChat(silent=false){try{const data=await apiPost('/chats/create',{userId:String(user.id),title:'Новый чат'});if(data.success){await loadChats();await openChat(data.chat.id);if(!silent)showToast('Чат создан','success')}}catch(e){showToast('Ошибка создания чата','error')}}async function openChat(chatId){if(isSending)return;currentChatId=chatId;renderChatList();if(window.innerWidth<=900)closeSidebar();const inner=document.getElementById('chat-inner');inner.innerHTML='<div style="text-align:center;padding:60px 20px;color:var(--text-muted);font-size:13px;">Загрузка...</div>';try{const data=await apiGet(`/chats/get?chatId=${chatId}`);if(data.error){showToast(data.error,'error');return}chatContext=data.chat;currentChatCount=data.messages.length;currentChatLimit=100;document.getElementById('topbar-title').textContent=data.chat.title;inner.innerHTML='';if(data.messages.length===0){inner.innerHTML=`<div class="chat-welcome" id="chat-welcome"><div class="chat-welcome-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><h2>Чем помочь?</h2><p>Задай вопрос — я отвечу. Или выбери один из примеров.</p><div class="suggestions"><button class="suggestion-btn" onclick="sendSuggestion('Расскажи интересный факт')">💡 Интересный факт</button><button class="suggestion-btn" onclick="sendSuggestion('Помоги написать пост для Telegram')">✍️ Написать пост</button><button class="suggestion-btn" onclick="sendSuggestion('Объясни простыми словами что такое API')">📚 Объясни API</button><button class="suggestion-btn" onclick="sendSuggestion('Придумай идею для бизнеса')">🚀 Идея бизнеса</button></div></div>`}else{for(const msg of data.messages){addMessageToDOM(msg.role,msg.content,false)}scrollToBottom()}updateChatInfo()}catch(e){showToast('Ошибка загрузки чата','error')}}async function togglePin(chatId){closeAllChatMenus();const chat=chats.find(c=>c.id===chatId);if(!chat)return;try{await apiPost('/chats/update',{chatId:chatId,userId:String(user.id),pinned:!chat.pinned});await loadChats();showToast(chat.pinned?'Откреплено':'Закреплено','success')}catch(e){}}function startRename(chatId){closeAllChatMenus();chatToRename=chatId;const chat=chats.find(c=>c.id===chatId);document.getElementById('rename-input').value=chat?chat.title:'';document.getElementById('rename-modal').classList.add('active');setTimeout(()=>document.getElementById('rename-input').focus(),100)}async function confirmRename(){const newTitle=document.getElementById('rename-input').value.trim();if(!newTitle){showToast('Введи название','error');return}try{await apiPost('/chats/update',{chatId:chatToRename,userId:String(user.id),title:newTitle});closeModal('rename-modal');await loadChats();if(chatToRename===currentChatId){document.getElementById('topbar-title').textContent=newTitle}showToast('Переименовано','success');chatToRename=null}catch(e){}}function startDelete(chatId){closeAllChatMenus();chatToDelete=chatId;document.getElementById('delete-modal').classList.add('active')}async function confirmDelete(){try{await apiPost('/chats/delete',{chatId:chatToDelete,userId:String(user.id)});closeModal('delete-modal');const wasActive=chatToDelete===currentChatId;chatToDelete=null;await loadChats();if(wasActive){if(chats.length>0){await openChat(chats[0].id)}else{await createNewChat(true)}}showToast('Чат удалён','success')}catch(e){}}function addMessageToDOM(role,text,animate=true){const inner=document.getElementById('chat-inner');const welcome=document.getElementById('chat-welcome');if(welcome)welcome.style.display='none';const msg=document.createElement('div');msg.className='message '+(role==='user'?'user':'ai');if(!animate)msg.style.animation='none';const avatarHTML=role==='user'?(user.photo_url?`<img src="${user.photo_url}">`:(user.first_name||'U')[0].toUpperCase()):`<svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`;msg.innerHTML=`<div class="message-avatar ${role==='user'?'user':'ai'}">${avatarHTML}</div><div class="message-content"><div class="message-name">${role==='user'?(user.first_name||'Вы'):'AI Assistant'}</div><div class="message-bubble">${formatMessage(text)}</div></div>`;inner.appendChild(msg);msg.querySelectorAll('pre').forEach(pre=>{const btn=document.createElement('button');btn.className='code-copy-btn';btn.textContent='Копировать';btn.onclick=()=>{navigator.clipboard.writeText(pre.querySelector('code')?.textContent||pre.textContent);showToast('Скопировано','success')};pre.appendChild(btn)});if(animate)scrollToBottom()}function formatMessage(text){if(!text)return'';let html=escapeHTML(text);html=html.replace(/```(\w*)\n?([\s\S]*?)```/g,(match,lang,code)=>{return `<pre><code>${code.trim()}</code></pre>`});html=html.replace(/`([^`]+)`/g,'<code>$1</code>');return html}function addTyping(){const inner=document.getElementById('chat-inner');const msg=document.createElement('div');msg.className='message ai';msg.id='typing-indicator';msg.innerHTML=`<div class="message-avatar ai"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><div class="message-content"><div class="message-name">AI Assistant</div><div class="message-bubble"><div class="typing"><span></span><span></span><span></span></div></div></div>`;inner.appendChild(msg);scrollToBottom()}function removeTyping(){const el=document.getElementById('typing-indicator');if(el)el.remove()}function escapeHTML(text){const div=document.createElement('div');div.textContent=text;return div.innerHTML}function scrollToBottom(){const scroll=document.getElementById('chat-scroll');setTimeout(()=>{scroll.scrollTop=scroll.scrollHeight},50)}function updateChatInfo(){document.getElementById('chat-info').textContent=`Осталось ${messagesLeft} / ${messagesLimit} · В чате ${currentChatCount} / ${currentChatLimit}`}function sendSuggestion(text){document.getElementById('chat-input').value=text;sendMessage()}async function sendMessage(){const input=document.getElementById('chat-input');const text=input.value.trim();if(!text||isSending||!currentChatId)return;if(messagesLeft<=0){showToast('Лимит сообщений исчерпан','error');return}if(currentChatCount>=currentChatLimit){showToast('Лимит сообщений в чате (100)','error');return}isSending=true;document.getElementById('chat-send').disabled=true;input.value='';input.style.height='auto';addMessageToDOM('user',text);addTyping();try{const data=await apiPost('/ai/chat',{userId:String(user.id),chatId:currentChatId,message:text,model:currentModel});removeTyping();if(data.error){if(data.error==='limit_reached'){addMessageToDOM('ai','⚠️ Лимит сообщений исчерпан. Обнови тариф.')}else if(data.error==='chat_limit_reached'){addMessageToDOM('ai','⚠️ Лимит сообщений в этом чате (100). Создай новый.')}else{addMessageToDOM('ai','⚠️ Ошибка: '+data.error)}return}addMessageToDOM('ai',data.response);messagesLeft=data.messagesLeft;userData.messagesToday=messagesLimit-messagesLeft;currentChatCount=data.chatMessagesCount||(currentChatCount+2);updateChatInfo();renderUsage();await loadChats()}catch(e){removeTyping();addMessageToDOM('ai','⚠️ Не удалось получить ответ.')}finally{isSending=false;document.getElementById('chat-send').disabled=false;if(tg?.HapticFeedback)tg.HapticFeedback.impactOccurred('light')}}async function generateImage(){const promptEl=document.getElementById('image-prompt');const prompt=promptEl.value.trim();if(!prompt){showToast('Введи промпт','error');return}if(isGenerating)return;if(imagesLeft<=0){showToast('Лимит картинок исчерпан. Обнови тариф','error');return}isGenerating=true;document.getElementById('image-gen-btn').disabled=true;const resultCard=document.getElementById('image-result-card');resultCard.innerHTML=`<div class="image-loading"><div class="image-loading-spinner"></div><div class="image-loading-text">Рисую картинку...</div><div class="image-loading-hint">Обычно занимает 3-5 секунд</div></div>`;try{const data=await apiPost('/ai/image',{userId:String(user.id),prompt:prompt});if(data.error){resultCard.innerHTML=`<div class="image-result-placeholder"><svg viewBox="0 0 24 24" style="stroke:var(--danger);"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><p style="color:var(--danger);">${data.message||'Ошибка генерации'}</p></div>`;showToast(data.message||'Ошибка','error');return}lastGeneratedImage=data.image;imagesLeft=data.imagesLeft;imagesLimit=data.imagesLimit;userData.imagesToday=imagesLimit-imagesLeft;resultCard.innerHTML=`<img class="image-result-img" src="data:image/png;base64,${data.image}" alt="${escapeHTML(prompt)}"><div class="image-result-actions"><button class="image-action-btn primary" onclick="downloadImage()"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Скачать</button><button class="image-action-btn" onclick="generateImage()"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>Ещё раз</button><button class="image-action-btn" onclick="clearImageResult()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Очистить</button></div>`;updateImageLimitUI();renderUsage();await loadImageHistory();showToast('Картинка готова!','success');if(tg?.HapticFeedback)tg.HapticFeedback.notificationOccurred('success')}catch(e){resultCard.innerHTML=`<div class="image-result-placeholder"><svg viewBox="0 0 24 24" style="stroke:var(--danger);"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><p style="color:var(--danger);">Не удалось сгенерировать</p></div>`;showToast('Ошибка сети','error')}finally{isGenerating=false;document.getElementById('image-gen-btn').disabled=false}}function downloadImage(){if(!lastGeneratedImage)return;const link=document.createElement('a');link.href='data:image/png;base64,'+lastGeneratedImage;link.download='ai-image-'+Date.now()+'.png';document.body.appendChild(link);link.click();document.body.removeChild(link);showToast('Скачивание...','success');if(tg?.HapticFeedback)tg.HapticFeedback.impactOccurred('light')}function clearImageResult(){lastGeneratedImage=null;document.getElementById('image-result-card').innerHTML=`<div class="image-result-placeholder" id="image-placeholder"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><p>Здесь появится сгенерированная картинка</p></div>`}function updateImageLimitUI(){const text=document.getElementById('image-limit-text');const fill=document.getElementById('image-limit-fill');if(text)text.textContent=`${imagesLeft} / ${imagesLimit}`;if(fill){const used=imagesLimit-imagesLeft;fill.style.width=Math.min(100,(used/imagesLimit)*100)+'%'}}function renderImageHistory(history){const list=document.getElementById('image-history-list');if(!list)return;if(!history||history.length===0){list.innerHTML='<div class="image-history-empty">Пока пусто</div>';return}list.innerHTML=history.map(item=>{const date=new Date(item.created_at).toLocaleDateString('ru-RU',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});return `<div class="image-history-item" onclick="useHistoryPrompt('${escapeHTML(item.prompt).replace(/'/g,"\\'")}')"><div class="image-history-text">${escapeHTML(item.prompt)}</div><div class="image-history-date">${date}</div></div>`}).join('')}function useHistoryPrompt(prompt){document.getElementById('image-prompt').value=prompt;document.getElementById('image-prompt').focus()}async function clearImageHistory(){if(!confirm('Очистить всю историю промптов?'))return;try{await apiPost('/ai/image/clear',{userId:String(user.id)});await loadImageHistory();showToast('История очищена','success')}catch(e){}}function renderAll(){renderProfile();renderUsage();updateSidebarUser();updateImageLimitUI()}function updateSidebarUser(){const avatar=document.getElementById('sidebar-avatar');if(user.photo_url)avatar.innerHTML=`<img src="${user.photo_url}">`;else avatar.textContent=(user.first_name||'?')[0].toUpperCase();document.getElementById('sidebar-name').textContent=user.first_name||'Пользователь';document.getElementById('sidebar-plan').textContent=(userData.plan||'free').toUpperCase()}function renderProfile(){const avatar=document.getElementById('profile-avatar');if(user.photo_url)avatar.innerHTML=`<img src="${user.photo_url}">`;else avatar.textContent=(user.first_name||'?')[0].toUpperCase();document.getElementById('profile-name').textContent=user.first_name||'Пользователь';document.getElementById('profile-username').textContent='@'+(user.username||'user');const chip=document.getElementById('profile-plan-chip');chip.textContent=(userData.plan||'free').toUpperCase();chip.className='plan-chip '+(userData.plan==='gpt'?'gpt':'')}function renderUsage(){const limits={free:30,premium:60,gpt:999999};const limit=limits[userData.plan]||30;const used=userData.messagesToday||0;document.getElementById('usage-messages').textContent=`${used} / ${limit}`;document.getElementById('usage-bar-messages').style.width=Math.min(100,(used/limit)*100)+'%';const imgLimit=userData.plan==='gpt'?999999:(userData.plan==='premium'?10:5);const imgUsed=userData.imagesToday||0;document.getElementById('usage-images').textContent=`${imgUsed} / ${imgLimit}`;document.getElementById('usage-bar-images').style.width=Math.min(100,(imgUsed/imgLimit)*100)+'%'}function showPage(name){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));const page=document.getElementById('page-'+name);if(page)page.classList.add('active');const titles={chat:chatContext?.title||'Чат',plans:'Тарифы',profile:'Профиль',images:'AI Images'};document.getElementById('topbar-title').textContent=titles[name]||'';document.getElementById('model-select-wrap').style.display=name==='chat'?'block':'none';document.querySelectorAll('.sidebar-nav-btn').forEach(b=>b.classList.remove('active'));if(window.innerWidth<=900)closeSidebar();if(name==='profile')renderProfile()}function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebar-overlay').classList.toggle('active')}function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebar-overlay').classList.remove('active')}function openSubscribeModal(plan){const titles={premium:'Premium — 299 ₽',gpt:'GPT — 1499 ₽'};document.getElementById('modal-title').textContent=titles[plan]||'Оплата скоро';document.getElementById('subscribe-modal').classList.add('active');if(tg?.HapticFeedback)tg.HapticFeedback.impactOccurred('light')}function closeModal(id){document.getElementById(id).classList.remove('active')}document.querySelectorAll('.modal-overlay').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id)})});function showToast(text,type=''){const toast=document.getElementById('toast');toast.textContent=text;toast.className='toast show '+type;clearTimeout(window._toastTimer);window._toastTimer=setTimeout(()=>toast.classList.remove('show'),2400)}const chatInput=document.getElementById('chat-input');chatInput.addEventListener('input',()=>{chatInput.style.height='auto';chatInput.style.height=Math.min(120,chatInput.scrollHeight)+'px'});chatInput.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage()}});document.getElementById('model-select').addEventListener('change',e=>{currentModel=e.target.value});document.getElementById('image-prompt').addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();generateImage()}});init()</script></body></html>
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover" />
+    <title>AI Chat</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+        :root {
+            --bg: #0a0a0f;
+            --bg-sidebar: #0f0f17;
+            --bg-card: #14141c;
+            --bg-card-hover: #1c1c26;
+            --bg-elevated: #1a1a24;
+            --bg-ai: #1a1a24;
+            --border: rgba(255, 255, 255, 0.06);
+            --border-hover: rgba(255, 255, 255, 0.12);
+            --text: #fff;
+            --text-secondary: #8a8a9e;
+            --text-muted: #4a4a5e;
+            --accent: #2f80ed;
+            --accent-hover: #4a9eff;
+            --accent-glow: rgba(47, 128, 237, 0.35);
+            --green: #22c55e;
+            --danger: #ef4444;
+            --warning: #eab308;
+            --purple: #a855f7;
+            --radius: 16px;
+            --radius-sm: 12px;
+            --sidebar-w: 280px;
+            --header-h: 60px
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            overscroll-behavior: none
+        }
+
+        .app {
+            display: flex;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden
+        }
+
+        .sidebar {
+            width: var(--sidebar-w);
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            transition: transform .3s cubic-bezier(.16, 1, .3, 1);
+            z-index: 200
+        }
+
+        .sidebar-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            font-weight: 900;
+            letter-spacing: -.5px;
+            margin-bottom: 14px
+        }
+
+        .sidebar-logo-mark {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #2f80ed, #a855f7);
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 14px var(--accent-glow);
+            flex-shrink: 0
+        }
+
+        .sidebar-logo-mark svg {
+            width: 16px;
+            height: 16px;
+            stroke: #fff;
+            fill: none;
+            stroke-width: 2.2
+        }
+
+        .new-chat-btn {
+            width: 100%;
+            padding: 11px 14px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 11px;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all .2s;
+            box-shadow: 0 4px 14px var(--accent-glow)
+        }
+
+        .new-chat-btn:hover {
+            background: var(--accent-hover)
+        }
+
+        .new-chat-btn svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2.5
+        }
+
+        .sidebar-nav {
+            padding: 8px;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .sidebar-nav-btn {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            padding: 10px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 600;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all .2s
+        }
+
+        .sidebar-nav-btn:hover {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text)
+        }
+
+        .sidebar-nav-btn.active {
+            background: rgba(47, 128, 237, 0.12);
+            color: var(--accent)
+        }
+
+        .sidebar-nav-btn svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2
+        }
+
+        .chat-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px
+        }
+
+        .chat-list::-webkit-scrollbar {
+            width: 4px
+        }
+
+        .chat-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 2px
+        }
+
+        .chat-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all .15s;
+            margin-bottom: 2px;
+            position: relative
+        }
+
+        .chat-item:hover {
+            background: rgba(255, 255, 255, 0.04)
+        }
+
+        .chat-item.active {
+            background: rgba(47, 128, 237, 0.12)
+        }
+
+        .chat-item-pin {
+            position: absolute;
+            top: 6px;
+            right: 8px;
+            color: var(--warning);
+            font-size: 10px;
+            opacity: .8
+        }
+
+        .chat-item-content {
+            flex: 1;
+            min-width: 0
+        }
+
+        .chat-item-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 2px
+        }
+
+        .chat-item.active .chat-item-title {
+            color: var(--text)
+        }
+
+        .chat-item-date {
+            font-size: 10px;
+            color: var(--text-muted);
+            font-weight: 600
+        }
+
+        .chat-item-menu-btn {
+            width: 26px;
+            height: 26px;
+            background: none;
+            border: none;
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-muted);
+            opacity: 0;
+            transition: all .15s;
+            flex-shrink: 0
+        }
+
+        .chat-item:hover .chat-item-menu-btn {
+            opacity: 1
+        }
+
+        .chat-item-menu-btn:hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text)
+        }
+
+        .chat-item-menu-btn svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2.5
+        }
+
+        .chat-item-menu {
+            position: absolute;
+            top: 100%;
+            right: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 4px;
+            z-index: 100;
+            min-width: 140px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .4);
+            display: none
+        }
+
+        .chat-item-menu.active {
+            display: block
+        }
+
+        .chat-item-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            border-radius: 7px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-family: inherit;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            transition: all .15s
+        }
+
+        .chat-item-menu-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text)
+        }
+
+        .chat-item-menu-item.danger {
+            color: var(--danger)
+        }
+
+        .chat-item-menu-item svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2
+        }
+
+        .sidebar-footer {
+            padding: 12px;
+            border-top: 1px solid var(--border)
+        }
+
+        .sidebar-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 11px;
+            cursor: pointer;
+            transition: all .2s
+        }
+
+        .sidebar-user:hover {
+            background: rgba(255, 255, 255, 0.04)
+        }
+
+        .sidebar-user-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            background: linear-gradient(135deg, #2f80ed, #a855f7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 14px;
+            color: #fff;
+            flex-shrink: 0;
+            overflow: hidden
+        }
+
+        .sidebar-user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        .sidebar-user-info {
+            flex: 1;
+            min-width: 0
+        }
+
+        .sidebar-user-name {
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .sidebar-user-plan {
+            font-size: 10px;
+            color: var(--accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .5px
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .6);
+            backdrop-filter: blur(4px);
+            z-index: 150;
+            animation: fadeIn .2s
+        }
+
+        .sidebar-overlay.active {
+            display: block
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        .main-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            overflow: hidden;
+            position: relative
+        }
+
+        .topbar {
+            height: var(--header-h);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            gap: 12px;
+            flex-shrink: 0;
+            background: var(--bg);
+            z-index: 50
+        }
+
+        .burger-btn {
+            display: none;
+            width: 38px;
+            height: 38px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-secondary);
+            flex-shrink: 0
+        }
+
+        .burger-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2
+        }
+
+        .topbar-title {
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: -.3px;
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .model-select-wrap {
+            position: relative
+        }
+
+        .model-select {
+            padding: 8px 32px 8px 14px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 12px;
+            font-weight: 700;
+            font-family: inherit;
+            outline: none;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238a8a9e' stroke-width='2.5' stroke-linecap='round'%3e%3cpolyline points='6 9 12 15 18 9'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 12px
+        }
+
+        .page {
+            display: none;
+            flex: 1;
+            flex-direction: column;
+            min-height: 0;
+            overflow: hidden;
+            position: relative
+        }
+
+        .page.active {
+            display: flex
+        }
+
+        .chat-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 16px 100px;
+            scroll-behavior: smooth
+        }
+
+        .chat-scroll::-webkit-scrollbar {
+            width: 6px
+        }
+
+        .chat-scroll::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px
+        }
+
+        .chat-inner {
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%
+        }
+
+        .chat-welcome {
+            text-align: center;
+            padding: 60px 20px
+        }
+
+        .chat-welcome-icon {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #2f80ed, #a855f7);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 32px var(--accent-glow)
+        }
+
+        .chat-welcome-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: #fff;
+            fill: none;
+            stroke-width: 2
+        }
+
+        .chat-welcome h2 {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: -.8px;
+            margin-bottom: 8px
+        }
+
+        .chat-welcome p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.5
+        }
+
+        .suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center
+        }
+
+        .suggestion-btn {
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all .2s
+        }
+
+        .suggestion-btn:hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text);
+            border-color: var(--border-hover)
+        }
+
+        .message {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            animation: messageIn .3s cubic-bezier(.16, 1, .3, 1);
+            max-width: 100%
+        }
+
+        @keyframes messageIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 900;
+            color: #fff;
+            flex-shrink: 0;
+            overflow: hidden
+        }
+
+        .message-avatar.user {
+            background: linear-gradient(135deg, #2f80ed, #4a9eff)
+        }
+
+        .message-avatar.ai {
+            background: linear-gradient(135deg, #a855f7, #7c3aed)
+        }
+
+        .message-avatar.ai svg {
+            width: 16px;
+            height: 16px;
+            stroke: #fff;
+            fill: none;
+            stroke-width: 2.2
+        }
+
+        .message-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        .message-content {
+            flex: 1;
+            min-width: 0
+        }
+
+        .message-name {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            margin-bottom: 6px
+        }
+
+        .message-bubble {
+            padding: 12px 16px;
+            border-radius: 14px;
+            font-size: 14px;
+            line-height: 1.55;
+            word-wrap: break-word;
+            white-space: pre-wrap
+        }
+
+        .message.user .message-bubble {
+            background: rgba(47, 128, 237, 0.12);
+            border: 1px solid rgba(47, 128, 237, 0.25)
+        }
+
+        .message.ai .message-bubble {
+            background: var(--bg-ai);
+            border: 1px solid var(--border)
+        }
+
+        .message-bubble code {
+            background: rgba(0, 0, 0, .4);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 12.5px
+        }
+
+        .message-bubble pre {
+            background: rgba(0, 0, 0, .4);
+            padding: 12px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 8px 0;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 12.5px;
+            line-height: 1.5;
+            position: relative
+        }
+
+        .message-bubble pre code {
+            background: none;
+            padding: 0
+        }
+
+        .code-copy-btn {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            padding: 4px 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 6px;
+            color: var(--text);
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            opacity: 0;
+            transition: opacity .15s
+        }
+
+        .message-bubble pre:hover .code-copy-btn {
+            opacity: 1
+        }
+
+        .typing {
+            display: inline-flex;
+            gap: 4px;
+            align-items: center;
+            padding: 4px 0
+        }
+
+        .typing span {
+            width: 6px;
+            height: 6px;
+            background: var(--text-muted);
+            border-radius: 50%;
+            animation: typing 1.4s infinite
+        }
+
+        .typing span:nth-child(2) {
+            animation-delay: .2s
+        }
+
+        .typing span:nth-child(3) {
+            animation-delay: .4s
+        }
+
+        @keyframes typing {
+
+            0%,
+            60%,
+            100% {
+                opacity: .3;
+                transform: translateY(0)
+            }
+
+            30% {
+                opacity: 1;
+                transform: translateY(-3px)
+            }
+        }
+
+        .chat-input-wrap {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+            background: linear-gradient(to top, var(--bg) 60%, transparent);
+            pointer-events: none;
+            z-index: 40
+        }
+
+        .chat-input-inner {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 8px;
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            pointer-events: auto;
+            transition: border-color .2s
+        }
+
+        .chat-input-inner:focus-within {
+            border-color: var(--border-hover)
+        }
+
+        .chat-input {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            resize: none;
+            max-height: 120px;
+            min-height: 24px;
+            padding: 8px 8px 8px 12px;
+            line-height: 1.4
+        }
+
+        .chat-input::placeholder {
+            color: var(--text-muted)
+        }
+
+        .chat-send {
+            width: 38px;
+            height: 38px;
+            background: var(--accent);
+            border: none;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #fff;
+            transition: all .2s;
+            flex-shrink: 0
+        }
+
+        .chat-send:hover {
+            background: var(--accent-hover)
+        }
+
+        .chat-send:disabled {
+            opacity: .4;
+            cursor: not-allowed
+        }
+
+        .chat-send svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2.2
+        }
+
+        .chat-info {
+            max-width: 800px;
+            margin: 6px auto 0;
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 600;
+            pointer-events: auto
+        }
+
+        .page-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 16px 40px
+        }
+
+        .page-scroll::-webkit-scrollbar {
+            width: 6px
+        }
+
+        .page-scroll::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px
+        }
+
+        .page-inner {
+            max-width: 1100px;
+            margin: 0 auto
+        }
+
+        .page-head {
+            margin-bottom: 24px
+        }
+
+        .page-head h1 {
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 6px
+        }
+
+        .page-head p {
+            font-size: 14px;
+            color: var(--text-secondary)
+        }
+
+        .image-gen-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: start
+        }
+
+        @media(max-width:900px) {
+            .image-gen-layout {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .image-prompt-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px
+        }
+
+        .image-prompt-label {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            color: var(--text-muted);
+            margin-bottom: 10px
+        }
+
+        .image-prompt-input {
+            width: 100%;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            resize: vertical;
+            min-height: 120px;
+            line-height: 1.5;
+            margin-bottom: 12px
+        }
+
+        .image-prompt-input:focus {
+            border-color: var(--accent)
+        }
+
+        .image-prompt-input::placeholder {
+            color: var(--text-muted)
+        }
+
+        .image-gen-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all .2s;
+            box-shadow: 0 6px 20px var(--accent-glow)
+        }
+
+        .image-gen-btn:hover {
+            background: var(--accent-hover)
+        }
+
+        .image-gen-btn:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+            box-shadow: none
+        }
+
+        .image-gen-btn svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2.5
+        }
+
+        .image-limit-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted)
+        }
+
+        .image-limit-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 8px
+        }
+
+        .image-limit-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2f80ed, #a855f7);
+            border-radius: 3px;
+            transition: width .5s ease
+        }
+
+        .image-result-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center
+        }
+
+        .image-result-placeholder {
+            color: var(--text-muted)
+        }
+
+        .image-result-placeholder svg {
+            width: 64px;
+            height: 64px;
+            stroke: var(--text-muted);
+            fill: none;
+            stroke-width: 1.5;
+            margin-bottom: 16px
+        }
+
+        .image-result-placeholder p {
+            font-size: 14px;
+            line-height: 1.5
+        }
+
+        .image-result-img {
+            width: 100%;
+            max-width: 1024px;
+            border-radius: 12px;
+            display: block;
+            animation: imageIn .4s cubic-bezier(.16, 1, .3, 1)
+        }
+
+        @keyframes imageIn {
+            from {
+                opacity: 0;
+                transform: scale(.95)
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1)
+            }
+        }
+
+        .image-result-actions {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+            margin-top: 16px;
+            flex-wrap: wrap
+        }
+
+        .image-action-btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 11px 14px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all .2s
+        }
+
+        .image-action-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text)
+        }
+
+        .image-action-btn.primary {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff
+        }
+
+        .image-action-btn.primary:hover {
+            background: var(--accent-hover)
+        }
+
+        .image-action-btn svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2.2
+        }
+
+        .image-history-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-top: 20px
+        }
+
+        .image-history-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px
+        }
+
+        .image-history-title {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            color: var(--text-muted)
+        }
+
+        .image-history-clear {
+            padding: 6px 12px;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 8px;
+            color: var(--danger);
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            font-family: inherit
+        }
+
+        .image-history-clear:hover {
+            background: rgba(239, 68, 68, 0.2)
+        }
+
+        .image-history-item {
+            padding: 10px 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 6px;
+            cursor: pointer;
+            transition: all .15s;
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .image-history-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--border-hover)
+        }
+
+        .image-history-text {
+            flex: 1;
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .image-history-date {
+            font-size: 10px;
+            color: var(--text-muted);
+            font-weight: 600;
+            flex-shrink: 0
+        }
+
+        .image-history-empty {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: var(--text-muted)
+        }
+
+        .image-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            gap: 20px
+        }
+
+        .image-loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid rgba(255, 255, 255, 0.08);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin .8s linear infinite
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .image-loading-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 600
+        }
+
+        .image-loading-hint {
+            font-size: 12px;
+            color: var(--text-muted)
+        }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 24px
+        }
+
+        .plan-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px 22px;
+            display: flex;
+            flex-direction: column;
+            transition: all .25s;
+            position: relative;
+            overflow: hidden
+        }
+
+        .plan-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--border-hover)
+        }
+
+        .plan-card.current {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 1px var(--accent)
+        }
+
+        .plan-card.premium {
+            background: linear-gradient(180deg, #14141c 0%, #1a1730 100%)
+        }
+
+        .plan-card.gpt {
+            background: linear-gradient(180deg, #14141c 0%, #2a1435 100%)
+        }
+
+        .plan-badge {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            padding: 4px 10px;
+            background: var(--accent);
+            color: #fff;
+            border-radius: 100px;
+            font-size: 9px;
+            font-weight: 900;
+            letter-spacing: .5px;
+            text-transform: uppercase
+        }
+
+        .plan-badge.purple {
+            background: var(--purple)
+        }
+
+        .plan-name {
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: -.5px;
+            margin-bottom: 6px
+        }
+
+        .plan-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            min-height: 32px;
+            line-height: 1.4
+        }
+
+        .plan-price {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            margin-bottom: 6px
+        }
+
+        .plan-price-amount {
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: -1.5px
+        }
+
+        .plan-price-period {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 600
+        }
+
+        .plan-stars {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-weight: 600
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 24px;
+            flex: 1
+        }
+
+        .plan-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 8px 0;
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.4
+        }
+
+        .plan-features li svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--green);
+            fill: none;
+            stroke-width: 2.5;
+            flex-shrink: 0;
+            margin-top: 1px
+        }
+
+        .plan-features li.disabled {
+            opacity: .4
+        }
+
+        .plan-features li.disabled svg {
+            stroke: var(--text-muted)
+        }
+
+        .plan-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all .2s
+        }
+
+        .plan-btn:hover {
+            background: var(--accent-hover)
+        }
+
+        .plan-btn:disabled {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-muted);
+            cursor: not-allowed
+        }
+
+        .plan-btn.purple {
+            background: var(--purple)
+        }
+
+        .plan-btn.purple:hover {
+            background: #b975f8
+        }
+
+        .profile-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 16px;
+            position: relative;
+            overflow: hidden
+        }
+
+        .profile-card::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, var(--accent-glow), transparent 70%);
+            border-radius: 50%
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+            margin-bottom: 20px
+        }
+
+        .profile-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #2f80ed, #a855f7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 900;
+            color: #fff;
+            flex-shrink: 0;
+            overflow: hidden;
+            box-shadow: 0 8px 24px var(--accent-glow)
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        .profile-info {
+            flex: 1;
+            min-width: 0
+        }
+
+        .profile-name {
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: -.6px;
+            margin-bottom: 4px
+        }
+
+        .profile-username {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            font-weight: 600
+        }
+
+        .plan-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            background: rgba(47, 128, 237, 0.15);
+            border: 1px solid rgba(47, 128, 237, 0.3);
+            color: var(--accent);
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .5px
+        }
+
+        .plan-chip.gpt {
+            background: rgba(168, 85, 247, 0.15);
+            border-color: rgba(168, 85, 247, 0.3);
+            color: var(--purple)
+        }
+
+        .usage-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            position: relative
+        }
+
+        .usage-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 16px
+        }
+
+        .usage-label {
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            color: var(--text-muted);
+            margin-bottom: 8px
+        }
+
+        .usage-value {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 4px
+        }
+
+        .usage-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 10px
+        }
+
+        .usage-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2f80ed, #a855f7);
+            border-radius: 3px;
+            transition: width .5s ease
+        }
+
+        .profile-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px
+        }
+
+        .profile-menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 18px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all .2s;
+            text-align: left;
+            font-family: inherit;
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 700
+        }
+
+        .profile-menu-item:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-hover)
+        }
+
+        .profile-menu-left {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .profile-menu-icon {
+            width: 34px;
+            height: 34px;
+            background: rgba(47, 128, 237, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .profile-menu-icon svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--accent);
+            fill: none;
+            stroke-width: 2
+        }
+
+        .profile-menu-arrow {
+            color: var(--text-muted);
+            font-size: 18px
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 500;
+            align-items: center;
+            justify-content: center;
+            padding: 20px
+        }
+
+        .modal-overlay.active {
+            display: flex
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px 24px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            animation: modalIn .3s cubic-bezier(.16, 1, .3, 1)
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(.94) translateY(10px)
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0)
+            }
+        }
+
+        .modal-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 16px;
+            background: linear-gradient(135deg, #2f80ed, #a855f7);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px var(--accent-glow)
+        }
+
+        .modal-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: #fff;
+            fill: none;
+            stroke-width: 2
+        }
+
+        .modal h3 {
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: -.5px;
+            margin-bottom: 8px
+        }
+
+        .modal p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.55;
+            margin-bottom: 20px
+        }
+
+        .modal-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all .2s;
+            text-decoration: none;
+            display: block;
+            text-align: center
+        }
+
+        .modal-btn:hover {
+            background: var(--accent-hover)
+        }
+
+        .modal-btn.secondary {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            margin-top: 8px
+        }
+
+        .modal-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text)
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 12px 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            color: var(--text);
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            margin-bottom: 16px
+        }
+
+        .modal-input:focus {
+            border-color: var(--accent)
+        }
+
+        .toast {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-120px);
+            background: rgba(20, 20, 28, .95);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 12px 20px;
+            color: var(--text);
+            font-size: 13px;
+            font-weight: 700;
+            z-index: 999;
+            transition: transform .3s;
+            max-width: 90%;
+            text-align: center
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0)
+        }
+
+        .toast.success {
+            border-color: rgba(34, 197, 94, .4);
+            color: var(--green)
+        }
+
+        .toast.error {
+            border-color: rgba(239, 68, 68, .4);
+            color: var(--danger)
+        }
+
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity .5s ease, visibility .5s
+        }
+
+        #loader.hidden {
+            opacity: 0;
+            visibility: hidden
+        }
+
+        .loader-logo {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: -1.5px;
+            background: linear-gradient(135deg, #fff 0%, #2f80ed 60%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            text-align: center
+        }
+
+        .loader-track {
+            width: 160px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 3px;
+            margin: 0 auto;
+            overflow: hidden
+        }
+
+        .loader-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #2f80ed, #a855f7);
+            border-radius: 3px;
+            transition: width .3s ease
+        }
+
+        @media(max-width:900px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100%;
+                transform: translateX(-100%)
+            }
+
+            .sidebar.open {
+                transform: translateX(0)
+            }
+
+            .burger-btn {
+                display: flex
+            }
+
+            .plans-grid {
+                grid-template-columns: 1fr;
+                gap: 12px
+            }
+        }
+
+        @media(max-width:500px) {
+            .chat-scroll {
+                padding: 16px 12px 100px
+            }
+
+            .chat-input-wrap {
+                padding: 10px 12px calc(10px + env(safe-area-inset-bottom))
+            }
+
+            .page-head h1 {
+                font-size: 22px
+            }
+
+            .plan-price-amount {
+                font-size: 30px
+            }
+
+            .message-bubble {
+                font-size: 13.5px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="loader">
+        <div>
+            <div class="loader-logo">AI Chat</div>
+            <div class="loader-track">
+                <div class="loader-fill" id="loader-fill"></div>
+            </div>
+        </div>
+    </div>
+    <div class="app">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <div class="sidebar-logo-mark"><svg viewBox="0 0 24 24">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                            <path d="M2 17l10 5 10-5" />
+                            <path d="M2 12l10 5 10-5" />
+                        </svg></div>
+                    <div>AI Chat</div>
+                </div><button class="new-chat-btn" onclick="createNewChat()"><svg viewBox="0 0 24 24">
+                        <line x1="12" y1="5" x2="12" y2="19" />
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>Новый чат</button>
+            </div>
+            <div class="sidebar-nav"><button class="sidebar-nav-btn" onclick="showPage('chat')"><svg
+                        viewBox="0 0 24 24">
+                        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+                    </svg>Чат</button><button class="sidebar-nav-btn" onclick="showPage('images')"><svg
+                        viewBox="0 0 24 24">
+                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                        <circle cx="8.5" cy="8.5" r="1.5" />
+                        <polyline points="21 15 16 10 5 21" />
+                    </svg>AI Images</button><button class="sidebar-nav-btn" onclick="showPage('plans')"><svg
+                        viewBox="0 0 24 24">
+                        <path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z" />
+                    </svg>Тарифы</button></div>
+            <div class="chat-list" id="chat-list"></div>
+            <div class="sidebar-footer">
+                <div class="sidebar-user" onclick="showPage('profile')">
+                    <div class="sidebar-user-avatar" id="sidebar-avatar">?</div>
+                    <div class="sidebar-user-info">
+                        <div class="sidebar-user-name" id="sidebar-name">Пользователь</div>
+                        <div class="sidebar-user-plan" id="sidebar-plan">FREE</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+        <div class="main-area">
+            <div class="topbar"><button class="burger-btn" onclick="toggleSidebar()"><svg viewBox="0 0 24 24">
+                        <line x1="3" y1="12" x2="21" y2="12" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <line x1="3" y1="18" x2="21" y2="18" />
+                    </svg></button>
+                <div class="topbar-title" id="topbar-title">Чат</div>
+                <div class="model-select-wrap" id="model-select-wrap"><select class="model-select" id="model-select">
+                        <option value="llama-8b">Llama 3.1 8B</option>
+                        <option value="glm-flash">GLM 4.7 Flash</option>
+                    </select></div>
+            </div>
+            <div class="page active" id="page-chat">
+                <div class="chat-scroll" id="chat-scroll">
+                    <div class="chat-inner" id="chat-inner">
+                        <div class="chat-welcome" id="chat-welcome">
+                            <div class="chat-welcome-icon"><svg viewBox="0 0 24 24">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                                    <path d="M2 17l10 5 10-5" />
+                                    <path d="M2 12l10 5 10-5" />
+                                </svg></div>
+                            <h2>Чем помочь?</h2>
+                            <p>Задай вопрос — я отвечу. Или выбери один из примеров.</p>
+                            <div class="suggestions"><button class="suggestion-btn"
+                                    onclick="sendSuggestion('Расскажи интересный факт')">💡 Интересный
+                                    факт</button><button class="suggestion-btn"
+                                    onclick="sendSuggestion('Помоги написать пост для Telegram')">✍️ Написать
+                                    пост</button><button class="suggestion-btn"
+                                    onclick="sendSuggestion('Объясни простыми словами что такое API')">📚 Объясни
+                                    API</button><button class="suggestion-btn"
+                                    onclick="sendSuggestion('Придумай идею для бизнеса')">🚀 Идея бизнеса</button></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-wrap">
+                    <div class="chat-input-inner"><textarea class="chat-input" id="chat-input"
+                            placeholder="Напиши сообщение..." rows="1"></textarea><button class="chat-send"
+                            id="chat-send" onclick="sendMessage()"><svg viewBox="0 0 24 24">
+                                <line x1="22" y1="2" x2="11" y2="13" />
+                                <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                            </svg></button></div>
+                    <div class="chat-info" id="chat-info">Осталось 30 / 30 сообщений</div>
+                </div>
+            </div>
+            <div class="page" id="page-images">
+                <div class="page-scroll">
+                    <div class="page-inner">
+                        <div class="page-head">
+                            <h1>AI Images</h1>
+                            <p>Опиши картинку, которую хочешь сгенерировать</p>
+                        </div>
+                        <div class="image-gen-layout">
+                            <div>
+                                <div class="image-prompt-card">
+                                    <div class="image-prompt-label">Промпт</div><textarea class="image-prompt-input"
+                                        id="image-prompt"
+                                        placeholder="Например: космический кот в скафандре, стиль кибербанк, яркие цвета, 4K..."></textarea><button
+                                        class="image-gen-btn" id="image-gen-btn" onclick="generateImage()"><svg
+                                            viewBox="0 0 24 24">
+                                            <path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z" />
+                                        </svg>Сгенерировать</button>
+                                    <div class="image-limit-info"><span>Осталось картинок</span><span
+                                            id="image-limit-text">5 / 5</span></div>
+                                    <div class="image-limit-bar">
+                                        <div class="image-limit-fill" id="image-limit-fill" style="width:0%"></div>
+                                    </div>
+                                </div>
+                                <div class="image-history-card">
+                                    <div class="image-history-head">
+                                        <div class="image-history-title">История промптов</div><button
+                                            class="image-history-clear" onclick="clearImageHistory()">Очистить</button>
+                                    </div>
+                                    <div id="image-history-list">
+                                        <div class="image-history-empty">Пока пусто</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="image-result-card" id="image-result-card">
+                                <div class="image-result-placeholder" id="image-placeholder"><svg viewBox="0 0 24 24">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                                        <circle cx="8.5" cy="8.5" r="1.5" />
+                                        <polyline points="21 15 16 10 5 21" />
+                                    </svg>
+                                    <p>Здесь появится сгенерированная картинка</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page" id="page-plans">
+                <div class="page-scroll">
+                    <div class="page-inner">
+                        <div class="page-head">
+                            <h1>Тарифы</h1>
+                            <p>Выбери подходящий план. Оплата скоро появится.</p>
+                        </div>
+                        <div class="plans-grid">
+                            <div class="plan-card" id="plan-free">
+                                <div class="plan-name">Free</div>
+                                <div class="plan-desc">Базовый доступ для знакомства</div>
+                                <div class="plan-price">
+                                    <div class="plan-price-amount">0 ₽</div>
+                                    <div class="plan-price-period">навсегда</div>
+                                </div>
+                                <div class="plan-stars">Бесплатно</div>
+                                <ul class="plan-features">
+                                    <li><svg viewBox="0 0 24 24">
+                                            <polyline points="20 6 9 17 4 12" />
+                                        </svg>30 сообщений в день</li>
+                                    <li><svg viewBox="0 0 24 24">
+                                            <polyline points="20 6 9 17 4 12" />
+                                        </svg>5 картинок в день</li>
+                                    <li><svg viewBox="0 0 24 24">
+                                            <polyline points="20 6 9 17 4 12" />
+                                        </svg>Базовые модели</li>
+                                    <li><svg viewBox="0 0 24 24">
+                                            <polyline points="20 6 9 17 4 12" />
+                                        </svg>История чатов</li>
+                                    <li class="disabled"><svg viewBox="0 0 24 24">
+                                            <line x1="18" y1="6" x2="6" y2="18" />
+                                            <line x1="6" y1="6" x2="18" y2="18" />
+                                        </svg>Расширенные модели</li>
+                                </ul><button class="plan-btn" disabled>Текущий тариф</button>
+                            </div>
+                            <div class="plan-card premium">
+                                <div class="plan-badge">Популярный</div>
+                                <div class="plan-name">Premium</div>
+                                <div class="plan-desc">Больше лимитов и расширенные модели</div>
+                                <div class="plan-price">
+                                    <div class="plan-price-amount">299 ₽</div>
+                                    <div class="plan-price-period">/ мес</div>
+                                </div>
+                                <div class="plan-stars">или 300 ⭐ Stars</div>
+                                <ul class="plan-features">
+                                    <li><svg viewBox="0 0 24 24">
+                                            <polyline points="20 6 9 17 4 12" />
+                                        </svg>60 сообщений в день</li>
+                                    <li><svg viewBox="0 0 24 24">
+                                            <polyline points="20 6 9 17 4 12" />
+                                        </svg>10 картинок в день</li>
+                                    <li><svg viewBox="0 0 24 24">
+                                            <polyline points="20 6 9 17 4 12" />
+                                        </svg>Расширенные модели</li>
+                                    <li><svg viewBox="0 0 24 24">
+                                            <polyline points="20 6 9 17 4 12" />
+                                        </svg>История чатов</li>
+                                    <li><svg viewBox="0 0 24 24">
+                                            <polyline points="20 6 9 17 4 12" />
+                                        </svg>Приоритетная поддержка</li>
+                                </ul><button class="plan-btn" onclick="openSubscribeModal('premium')">Купить</button>
+                            </div>
+                            <div class="plan-card gpt">
+                                <div class="plan-badge purple">MAX</div>
+                                <div class="plan-name">GPT</div>
+                                <div class="plan-desc">Полный доступ без ограничений</div>
+                                <div class="plan-price">
+                                    <div class="plan-price-amount">1499 ₽</div>
+                                    <div class="plan-price-period">/ мес</div>
+                                </div>
+                                <div class="plan-stars">или 1500 ⭐ Stars</div>
+                                <ul class="plan-features">
+                                    <li><svg viewBox="0 0 24 24">
+                                            <polyline points="20 6 9 17 4 12" />
+                                        </svg>Безлимит сообщений</li>
+                                    <li><svg viewBox="0 0 24 24">
+                                            <polyline points="20 6 9 17 4 12" />
+                                        </svg>Безлимит картинок</li>
+                                    <li><svg viewBox="0 0 24 24">
+                                            <polyline points="20 6 9 17 4 12" />
+                                        </svg>Все модели включая топовые</li>
+                                    <li><svg viewBox="0 0 24 24">
+                                            <polyline points="20 6 9 17 4 12" />
+                                        </svg>Приоритетная поддержка</li>
+                                    <li><svg viewBox="0 0 24 24">
+                                            <polyline points="20 6 9 17 4 12" />
+                                        </svg>Ранний доступ к новинкам</li>
+                                </ul><button class="plan-btn purple" onclick="openSubscribeModal('gpt')">Купить</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page" id="page-profile">
+                <div class="page-scroll">
+                    <div class="page-inner">
+                        <div class="page-head">
+                            <h1>Профиль</h1>
+                        </div>
+                        <div class="profile-card">
+                            <div class="profile-header">
+                                <div class="profile-avatar" id="profile-avatar">?</div>
+                                <div class="profile-info">
+                                    <div class="profile-name" id="profile-name">Пользователь</div>
+                                    <div class="profile-username" id="profile-username">@user</div>
+                                    <div class="plan-chip" id="profile-plan-chip">FREE</div>
+                                </div>
+                            </div>
+                            <div class="usage-grid">
+                                <div class="usage-card">
+                                    <div class="usage-label">Сообщений сегодня</div>
+                                    <div class="usage-value" id="usage-messages">0 / 30</div>
+                                    <div class="usage-bar">
+                                        <div class="usage-bar-fill" id="usage-bar-messages" style="width:0%"></div>
+                                    </div>
+                                </div>
+                                <div class="usage-card">
+                                    <div class="usage-label">Картинок сегодня</div>
+                                    <div class="usage-value" id="usage-images">0 / 5</div>
+                                    <div class="usage-bar">
+                                        <div class="usage-bar-fill" id="usage-bar-images" style="width:0%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-menu"><button class="profile-menu-item" onclick="showPage('plans')">
+                                <div class="profile-menu-left">
+                                    <div class="profile-menu-icon"><svg viewBox="0 0 24 24">
+                                            <path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z" />
+                                        </svg></div>Обновить тариф
+                                </div>
+                                <div class="profile-menu-arrow">›</div>
+                            </button><button class="profile-menu-item" onclick="showPage('images')">
+                                <div class="profile-menu-left">
+                                    <div class="profile-menu-icon"><svg viewBox="0 0 24 24">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" />
+                                            <circle cx="8.5" cy="8.5" r="1.5" />
+                                            <polyline points="21 15 16 10 5 21" />
+                                        </svg></div>Генерация картинок
+                                </div>
+                                <div class="profile-menu-arrow">›</div>
+                            </button><button class="profile-menu-item"
+                                onclick="window.open('https://t.me/qmarket_support','_blank')">
+                                <div class="profile-menu-left">
+                                    <div class="profile-menu-icon"><svg viewBox="0 0 24 24">
+                                            <path
+                                                d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" />
+                                        </svg></div>Поддержка
+                                </div>
+                                <div class="profile-menu-arrow">›</div>
+                            </button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="subscribe-modal">
+        <div class="modal">
+            <div class="modal-icon"><svg viewBox="0 0 24 24">
+                    <path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z" />
+                </svg></div>
+            <h3 id="modal-title">Оплата скоро</h3>
+            <p id="modal-text">Мы уже работаем над этим. Подпишись на канал, чтобы узнать первым о запуске.</p><a
+                href="https://t.me/QuickMarket_News" target="_blank" class="modal-btn">Подписаться на канал</a><button
+                class="modal-btn secondary" onclick="closeModal('subscribe-modal')">Закрыть</button>
+        </div>
+    </div>
+    <div class="modal-overlay" id="rename-modal">
+        <div class="modal">
+            <h3>Переименовать чат</h3>
+            <p>Введи новое название</p><input class="modal-input" id="rename-input" placeholder="Название чата"><button
+                class="modal-btn" onclick="confirmRename()">Сохранить</button><button class="modal-btn secondary"
+                onclick="closeModal('rename-modal')">Отмена</button>
+        </div>
+    </div>
+    <div class="modal-overlay" id="delete-modal">
+        <div class="modal">
+            <div class="modal-icon" style="background:linear-gradient(135deg,#ef4444,#dc2626)"><svg viewBox="0 0 24 24">
+                    <polyline points="3 6 5 6 21 6" />
+                    <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" />
+                </svg></div>
+            <h3>Удалить чат?</h3>
+            <p>Все сообщения будут удалены навсегда. Это действие нельзя отменить.</p><button class="modal-btn"
+                style="background:var(--danger)" onclick="confirmDelete()">Удалить</button><button
+                class="modal-btn secondary" onclick="closeModal('delete-modal')">Отмена</button>
+        </div>
+    </div>
+    <div class="toast" id="toast"></div>
+    <script>const tg = window.Telegram?.WebApp; if (tg) { tg.ready(); tg.expand(); if (tg.requestFullscreen) tg.requestFullscreen(); tg.setHeaderColor('#0a0a0f'); tg.setBackgroundColor('#0a0a0f'); if (tg.setBottomBarColor) tg.setBottomBarColor('#0a0a0f'); if (tg.disableVerticalSwipes) tg.disableVerticalSwipes() } const SERVER_URL = "https://ai-chat.z9hie.workers.dev"; const user = tg?.initDataUnsafe?.user || { first_name: 'Гость', username: 'guest', id: 0, photo_url: '' }; let userData = { plan: 'free', messagesToday: 0, imagesToday: 0 }; let messagesLeft = 30; let messagesLimit = 30; let imagesLeft = 5; let imagesLimit = 5; let currentModel = 'llama-8b'; let isSending = false; let chats = []; let currentChatId = null; let currentChatLimit = 100; let currentChatCount = 0; let chatContext = null; let chatToRename = null; let chatToDelete = null; let lastGeneratedImage = null; let isGenerating = false; async function apiGet(path) { const res = await fetch(SERVER_URL + path); return res.json() } async function apiPost(path, data) { const res = await fetch(SERVER_URL + path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }); return res.json() } const loaderFill = document.getElementById('loader-fill'); let progress = 0; const loaderInterval = setInterval(() => { progress += Math.random() * 15 + 5; if (progress > 90) progress = 90; loaderFill.style.width = progress + '%' }, 100); async function init() { try { userData = await apiPost('/user', { userId: String(user.id), firstName: user.first_name, username: user.username || '' }); await loadLimits(); await loadChats(); await loadImageHistory(); if (chats.length === 0) { await createNewChat(true) } else { await openChat(chats[0].id) } } catch (e) { console.error(e); showToast('Ошибка загрузки', 'error') } progress = 100; loaderFill.style.width = '100%'; setTimeout(() => { clearInterval(loaderInterval); document.getElementById('loader').classList.add('hidden'); renderAll() }, 300) } async function loadLimits() { try { const data = await apiGet(`/user/limits?userId=${user.id}`); if (data.plan) { userData.plan = data.plan; userData.messagesToday = data.messagesToday; userData.imagesToday = data.imagesToday || 0; messagesLeft = data.messagesLeft; messagesLimit = data.messagesLimit; imagesLeft = data.imagesLeft; imagesLimit = data.imagesLimit; updateImageLimitUI() } } catch (e) { } } async function loadChats() { try { const data = await apiGet(`/chats/list?userId=${user.id}`); chats = data.chats || []; renderChatList() } catch (e) { chats = [] } } async function loadImageHistory() { try { const data = await apiGet(`/ai/image/history?userId=${user.id}`); renderImageHistory(data.history || []) } catch (e) { renderImageHistory([]) } } function renderChatList() { const list = document.getElementById('chat-list'); if (chats.length === 0) { list.innerHTML = '<div style="text-align:center;padding:20px 10px;font-size:12px;color:var(--text-muted);">Нет чатов</div>'; return } list.innerHTML = chats.map(chat => { const isActive = chat.id === currentChatId; const date = new Date(chat.updated_at).toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' }); return `<div class="chat-item ${isActive ? 'active' : ''}" data-chat-id="${chat.id}" onclick="openChat('${chat.id}')">${chat.pinned ? '<div class="chat-item-pin">📌</div>' : ''}<div class="chat-item-content"><div class="chat-item-title">${escapeHTML(chat.title)}</div><div class="chat-item-date">${date}</div></div><button class="chat-item-menu-btn" onclick="event.stopPropagation();toggleChatMenu('${chat.id}',event)"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></button></div>` }).join('') } function toggleChatMenu(chatId, event) { event.stopPropagation(); document.querySelectorAll('.chat-item-menu').forEach(m => m.remove()); const chat = chats.find(c => c.id === chatId); if (!chat) return; const item = event.target.closest('.chat-item'); const menu = document.createElement('div'); menu.className = 'chat-item-menu active'; menu.innerHTML = `<button class="chat-item-menu-item" onclick="event.stopPropagation();startRename('${chatId}')"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Переименовать</button><button class="chat-item-menu-item" onclick="event.stopPropagation();togglePin('${chatId}')"><svg viewBox="0 0 24 24"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 00-1.11-1.79l-1.78-.9A2 2 0 0115 10.76V6h1a2 2 0 000-4H8a2 2 0 000 4h1v4.76a2 2 0 01-1.11 1.79l-1.78.9A2 2 0 005 15.24z"/></svg>${chat.pinned ? 'Открепить' : 'Закрепить'}</button><button class="chat-item-menu-item danger" onclick="event.stopPropagation();startDelete('${chatId}')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>Удалить</button>`; item.style.position = 'relative'; item.appendChild(menu); setTimeout(() => { document.addEventListener('click', closeAllChatMenus, { once: true }) }, 10) } function closeAllChatMenus() { document.querySelectorAll('.chat-item-menu').forEach(m => m.remove()) } async function createNewChat(silent = false) { try { const data = await apiPost('/chats/create', { userId: String(user.id), title: 'Новый чат' }); if (data.success) { await loadChats(); await openChat(data.chat.id); if (!silent) showToast('Чат создан', 'success') } } catch (e) { showToast('Ошибка создания чата', 'error') } } async function openChat(chatId) { if (isSending) return; currentChatId = chatId; renderChatList(); if (window.innerWidth <= 900) closeSidebar(); const inner = document.getElementById('chat-inner'); inner.innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--text-muted);font-size:13px;">Загрузка...</div>'; try { const data = await apiGet(`/chats/get?chatId=${chatId}`); if (data.error) { showToast(data.error, 'error'); return } chatContext = data.chat; currentChatCount = data.messages.length; currentChatLimit = 100; document.getElementById('topbar-title').textContent = data.chat.title; inner.innerHTML = ''; if (data.messages.length === 0) { inner.innerHTML = `<div class="chat-welcome" id="chat-welcome"><div class="chat-welcome-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><h2>Чем помочь?</h2><p>Задай вопрос — я отвечу. Или выбери один из примеров.</p><div class="suggestions"><button class="suggestion-btn" onclick="sendSuggestion('Расскажи интересный факт')">💡 Интересный факт</button><button class="suggestion-btn" onclick="sendSuggestion('Помоги написать пост для Telegram')">✍️ Написать пост</button><button class="suggestion-btn" onclick="sendSuggestion('Объясни простыми словами что такое API')">📚 Объясни API</button><button class="suggestion-btn" onclick="sendSuggestion('Придумай идею для бизнеса')">🚀 Идея бизнеса</button></div></div>` } else { for (const msg of data.messages) { addMessageToDOM(msg.role, msg.content, false) } scrollToBottom() } updateChatInfo() } catch (e) { showToast('Ошибка загрузки чата', 'error') } } async function togglePin(chatId) { closeAllChatMenus(); const chat = chats.find(c => c.id === chatId); if (!chat) return; try { await apiPost('/chats/update', { chatId: chatId, userId: String(user.id), pinned: !chat.pinned }); await loadChats(); showToast(chat.pinned ? 'Откреплено' : 'Закреплено', 'success') } catch (e) { } } function startRename(chatId) { closeAllChatMenus(); chatToRename = chatId; const chat = chats.find(c => c.id === chatId); document.getElementById('rename-input').value = chat ? chat.title : ''; document.getElementById('rename-modal').classList.add('active'); setTimeout(() => document.getElementById('rename-input').focus(), 100) } async function confirmRename() { const newTitle = document.getElementById('rename-input').value.trim(); if (!newTitle) { showToast('Введи название', 'error'); return } try { await apiPost('/chats/update', { chatId: chatToRename, userId: String(user.id), title: newTitle }); closeModal('rename-modal'); await loadChats(); if (chatToRename === currentChatId) { document.getElementById('topbar-title').textContent = newTitle } showToast('Переименовано', 'success'); chatToRename = null } catch (e) { } } function startDelete(chatId) { closeAllChatMenus(); chatToDelete = chatId; document.getElementById('delete-modal').classList.add('active') } async function confirmDelete() { try { await apiPost('/chats/delete', { chatId: chatToDelete, userId: String(user.id) }); closeModal('delete-modal'); const wasActive = chatToDelete === currentChatId; chatToDelete = null; await loadChats(); if (wasActive) { if (chats.length > 0) { await openChat(chats[0].id) } else { await createNewChat(true) } } showToast('Чат удалён', 'success') } catch (e) { } } function addMessageToDOM(role, text, animate = true) { const inner = document.getElementById('chat-inner'); const welcome = document.getElementById('chat-welcome'); if (welcome) welcome.style.display = 'none'; const msg = document.createElement('div'); msg.className = 'message ' + (role === 'user' ? 'user' : 'ai'); if (!animate) msg.style.animation = 'none'; const avatarHTML = role === 'user' ? (user.photo_url ? `<img src="${user.photo_url}">` : (user.first_name || 'U')[0].toUpperCase()) : `<svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`; msg.innerHTML = `<div class="message-avatar ${role === 'user' ? 'user' : 'ai'}">${avatarHTML}</div><div class="message-content"><div class="message-name">${role === 'user' ? (user.first_name || 'Вы') : 'AI Assistant'}</div><div class="message-bubble">${formatMessage(text)}</div></div>`; inner.appendChild(msg); msg.querySelectorAll('pre').forEach(pre => { const btn = document.createElement('button'); btn.className = 'code-copy-btn'; btn.textContent = 'Копировать'; btn.onclick = () => { navigator.clipboard.writeText(pre.querySelector('code')?.textContent || pre.textContent); showToast('Скопировано', 'success') }; pre.appendChild(btn) }); if (animate) scrollToBottom() } function formatMessage(text) { if (!text) return ''; let html = escapeHTML(text); html = html.replace(/```(\w*)\n?([\s\S]*?)```/g, (match, lang, code) => { return `<pre><code>${code.trim()}</code></pre>` }); html = html.replace(/`([^`]+)`/g, '<code>$1</code>'); return html } function addTyping() { const inner = document.getElementById('chat-inner'); const msg = document.createElement('div'); msg.className = 'message ai'; msg.id = 'typing-indicator'; msg.innerHTML = `<div class="message-avatar ai"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><div class="message-content"><div class="message-name">AI Assistant</div><div class="message-bubble"><div class="typing"><span></span><span></span><span></span></div></div></div>`; inner.appendChild(msg); scrollToBottom() } function removeTyping() { const el = document.getElementById('typing-indicator'); if (el) el.remove() } function escapeHTML(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML } function scrollToBottom() { const scroll = document.getElementById('chat-scroll'); setTimeout(() => { scroll.scrollTop = scroll.scrollHeight }, 50) } function updateChatInfo() { document.getElementById('chat-info').textContent = `Осталось ${messagesLeft} / ${messagesLimit} · В чате ${currentChatCount} / ${currentChatLimit}` } function sendSuggestion(text) { document.getElementById('chat-input').value = text; sendMessage() } async function sendMessage() { const input = document.getElementById('chat-input'); const text = input.value.trim(); if (!text || isSending || !currentChatId) return; if (messagesLeft <= 0) { showToast('Лимит сообщений исчерпан', 'error'); return } if (currentChatCount >= currentChatLimit) { showToast('Лимит сообщений в чате (100)', 'error'); return } isSending = true; document.getElementById('chat-send').disabled = true; input.value = ''; input.style.height = 'auto'; addMessageToDOM('user', text); addTyping(); try { const data = await apiPost('/ai/chat', { userId: String(user.id), chatId: currentChatId, message: text, model: currentModel }); removeTyping(); if (data.error) { if (data.error === 'limit_reached') { addMessageToDOM('ai', '⚠️ Лимит сообщений исчерпан. Обнови тариф.') } else if (data.error === 'chat_limit_reached') { addMessageToDOM('ai', '⚠️ Лимит сообщений в этом чате (100). Создай новый.') } else { addMessageToDOM('ai', '⚠️ Ошибка: ' + data.error) } return } addMessageToDOM('ai', data.response); messagesLeft = data.messagesLeft; userData.messagesToday = messagesLimit - messagesLeft; currentChatCount = data.chatMessagesCount || (currentChatCount + 2); updateChatInfo(); renderUsage(); await loadChats() } catch (e) { removeTyping(); addMessageToDOM('ai', '⚠️ Не удалось получить ответ.') } finally { isSending = false; document.getElementById('chat-send').disabled = false; if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light') } } async function generateImage() { const promptEl = document.getElementById('image-prompt'); const prompt = promptEl.value.trim(); if (!prompt) { showToast('Введи промпт', 'error'); return } if (isGenerating) return; if (imagesLeft <= 0) { showToast('Лимит картинок исчерпан. Обнови тариф', 'error'); return } isGenerating = true; document.getElementById('image-gen-btn').disabled = true; const resultCard = document.getElementById('image-result-card'); resultCard.innerHTML = `<div class="image-loading"><div class="image-loading-spinner"></div><div class="image-loading-text">Рисую картинку...</div><div class="image-loading-hint">Обычно занимает 3-5 секунд</div></div>`; try { const data = await apiPost('/ai/image', { userId: String(user.id), prompt: prompt }); if (data.error) { resultCard.innerHTML = `<div class="image-result-placeholder"><svg viewBox="0 0 24 24" style="stroke:var(--danger);"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><p style="color:var(--danger);">${data.message || 'Ошибка генерации'}</p></div>`; showToast(data.message || 'Ошибка', 'error'); return } lastGeneratedImage = data.image; imagesLeft = data.imagesLeft; imagesLimit = data.imagesLimit; userData.imagesToday = imagesLimit - imagesLeft; resultCard.innerHTML = `<img class="image-result-img" src="data:image/png;base64,${data.image}" alt="${escapeHTML(prompt)}"><div class="image-result-actions"><button class="image-action-btn primary" onclick="downloadImage()"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Скачать</button><button class="image-action-btn" onclick="generateImage()"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>Ещё раз</button><button class="image-action-btn" onclick="clearImageResult()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Очистить</button></div>`; updateImageLimitUI(); renderUsage(); await loadImageHistory(); showToast('Картинка готова!', 'success'); if (tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success') } catch (e) { resultCard.innerHTML = `<div class="image-result-placeholder"><svg viewBox="0 0 24 24" style="stroke:var(--danger);"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><p style="color:var(--danger);">Не удалось сгенерировать</p></div>`; showToast('Ошибка сети', 'error') } finally { isGenerating = false; document.getElementById('image-gen-btn').disabled = false } } function downloadImage() { if (!lastGeneratedImage) return; const link = document.createElement('a'); link.href = 'data:image/png;base64,' + lastGeneratedImage; link.download = 'ai-image-' + Date.now() + '.png'; document.body.appendChild(link); link.click(); document.body.removeChild(link); showToast('Скачивание...', 'success'); if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light') } function clearImageResult() { lastGeneratedImage = null; document.getElementById('image-result-card').innerHTML = `<div class="image-result-placeholder" id="image-placeholder"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><p>Здесь появится сгенерированная картинка</p></div>` } function updateImageLimitUI() { const text = document.getElementById('image-limit-text'); const fill = document.getElementById('image-limit-fill'); if (text) text.textContent = `${imagesLeft} / ${imagesLimit}`; if (fill) { const used = imagesLimit - imagesLeft; fill.style.width = Math.min(100, (used / imagesLimit) * 100) + '%' } } function renderImageHistory(history) { const list = document.getElementById('image-history-list'); if (!list) return; if (!history || history.length === 0) { list.innerHTML = '<div class="image-history-empty">Пока пусто</div>'; return } list.innerHTML = history.map(item => { const date = new Date(item.created_at).toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }); return `<div class="image-history-item" onclick="useHistoryPrompt('${escapeHTML(item.prompt).replace(/'/g, "\\'")}')"><div class="image-history-text">${escapeHTML(item.prompt)}</div><div class="image-history-date">${date}</div></div>` }).join('') } function useHistoryPrompt(prompt) { document.getElementById('image-prompt').value = prompt; document.getElementById('image-prompt').focus() } async function clearImageHistory() { if (!confirm('Очистить всю историю промптов?')) return; try { await apiPost('/ai/image/clear', { userId: String(user.id) }); await loadImageHistory(); showToast('История очищена', 'success') } catch (e) { } } function renderAll() { renderProfile(); renderUsage(); updateSidebarUser(); updateImageLimitUI() } function updateSidebarUser() { const avatar = document.getElementById('sidebar-avatar'); if (user.photo_url) avatar.innerHTML = `<img src="${user.photo_url}">`; else avatar.textContent = (user.first_name || '?')[0].toUpperCase(); document.getElementById('sidebar-name').textContent = user.first_name || 'Пользователь'; document.getElementById('sidebar-plan').textContent = (userData.plan || 'free').toUpperCase() } function renderProfile() { const avatar = document.getElementById('profile-avatar'); if (user.photo_url) avatar.innerHTML = `<img src="${user.photo_url}">`; else avatar.textContent = (user.first_name || '?')[0].toUpperCase(); document.getElementById('profile-name').textContent = user.first_name || 'Пользователь'; document.getElementById('profile-username').textContent = '@' + (user.username || 'user'); const chip = document.getElementById('profile-plan-chip'); chip.textContent = (userData.plan || 'free').toUpperCase(); chip.className = 'plan-chip ' + (userData.plan === 'gpt' ? 'gpt' : '') } function renderUsage() { const limits = { free: 30, premium: 60, gpt: 999999 }; const limit = limits[userData.plan] || 30; const used = userData.messagesToday || 0; document.getElementById('usage-messages').textContent = `${used} / ${limit}`; document.getElementById('usage-bar-messages').style.width = Math.min(100, (used / limit) * 100) + '%'; const imgLimit = userData.plan === 'gpt' ? 999999 : (userData.plan === 'premium' ? 10 : 5); const imgUsed = userData.imagesToday || 0; document.getElementById('usage-images').textContent = `${imgUsed} / ${imgLimit}`; document.getElementById('usage-bar-images').style.width = Math.min(100, (imgUsed / imgLimit) * 100) + '%' } function showPage(name) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); const page = document.getElementById('page-' + name); if (page) page.classList.add('active'); const titles = { chat: chatContext?.title || 'Чат', plans: 'Тарифы', profile: 'Профиль', images: 'AI Images' }; document.getElementById('topbar-title').textContent = titles[name] || ''; document.getElementById('model-select-wrap').style.display = name === 'chat' ? 'block' : 'none'; document.querySelectorAll('.sidebar-nav-btn').forEach(b => b.classList.remove('active')); if (window.innerWidth <= 900) closeSidebar(); if (name === 'profile') renderProfile() } function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('sidebar-overlay').classList.toggle('active') } function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebar-overlay').classList.remove('active') } function openSubscribeModal(plan) { const titles = { premium: 'Premium — 299 ₽', gpt: 'GPT — 1499 ₽' }; document.getElementById('modal-title').textContent = titles[plan] || 'Оплата скоро'; document.getElementById('subscribe-modal').classList.add('active'); if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light') } function closeModal(id) { document.getElementById(id).classList.remove('active') } document.querySelectorAll('.modal-overlay').forEach(m => { m.addEventListener('click', e => { if (e.target === m) closeModal(m.id) }) }); function showToast(text, type = '') { const toast = document.getElementById('toast'); toast.textContent = text; toast.className = 'toast show ' + type; clearTimeout(window._toastTimer); window._toastTimer = setTimeout(() => toast.classList.remove('show'), 2400) } const chatInput = document.getElementById('chat-input'); chatInput.addEventListener('input', () => { chatInput.style.height = 'auto'; chatInput.style.height = Math.min(120, chatInput.scrollHeight) + 'px' }); chatInput.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage() } }); document.getElementById('model-select').addEventListener('change', e => { currentModel = e.target.value }); document.getElementById('image-prompt').addEventListener('keydown', e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); generateImage() } }); init()</script>
+</body>
+
+</html>
